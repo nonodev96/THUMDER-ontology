@@ -1,0 +1,24 @@
+{
+  "name": "thumder_ontology",
+  "version": "1.0.0",
+  "description": "Ontology of THUMDER DLX - THe UltiMate Dlx EmulatoR",
+  "author": {
+    "name": "Antonio Mudarra Machuca",
+    "email": "nonodev96@gmail.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nonodev96/thumder_ontology.git"
+  },
+  "keywords": [
+    "dlx",
+    "thumder",
+    "ontology"
+  ],
+  "license": "ISC"
+}
