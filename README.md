@@ -1,1 +1,1 @@
-"# THUMDER Ontology" 
+# THUMDER Ontology 
