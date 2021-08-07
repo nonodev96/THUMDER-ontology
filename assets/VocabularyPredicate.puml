@@ -1,0 +1,27 @@
+@startuml{README_Predicate.png}
+!include config.skinparam
+'https://plantuml.com/class-diagram
+/'
+Concept: Elementos que representan la información necesaria para representar los diferentes tipos de comunicación de la ontología.
+AgentAction: Elementos que representas los eventos a los que responden los agentes para completar la comunicación de la ontología.
+Predicate: Elementos que representan las respuestas a los eventos para completar la comunicación de la ontología.
+'/
+
+package "Predicate" #DDDDDD {
+  interface Predicate
+  class AuthenticationResponse
+  abstract class Response extends AuthenticationResponse implements Predicate
+  class MakeFolderResponse implements Response
+  class MakeFileResponse extends MakeFolderResponse
+  class ModifyFolderResponse implements Response
+  class ModifyFileResponse extends ModifyFolderResponse
+  class DeleteFolderResponse implements Response
+  class DeleteFileResponse extends DeleteFolderResponse
+  class TreeFileManagerResponse implements Response
+  class StatusMachineResponse implements Response
+  class InstructionResponse implements Response
+}
+
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml{README_Concept.png}
+!include config.skinparam
+'https://plantuml.com/class-diagram
+/'
+Concept: Elementos que representan la información necesaria para representar los diferentes tipos de comunicación de la ontología.
+AgentAction: Elementos que representas los eventos a los que responden los agentes para completar la comunicación de la ontología.
+Predicate: Elementos que representan las respuestas a los eventos para completar la comunicación de la ontología.
+'/
+
+package "Concept" #DDDDDD {
+  interface Concept
+  abstract class Authentication implements Concept
+'  annotation AuthenticationGoogle extends Authentication
+'  annotation AuthenticationGithub extends Authentication
+'  annotation AuthenticationEmail extends Authentication
+  class AuthenticationToken extends Authentication
+  class StatusMachine implements Concept
+  class Instruction implements Concept
+  class TreeFileManager implements Concept
+}
+
+
+
+@enduml
