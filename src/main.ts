@@ -4,41 +4,69 @@ import { Predicate } from "./_Core/Predicate";
 import { AID } from "./_Core/AID";
 import { ACLMessage } from "./_Core/ACLMessage";
 
-import { Vocabulary } from "./Vocabulary";
+import { Authentication, AuthenticationToken } from "./Concept/Authentication";
+import { AgentCommunication, Client, Server } from "./Concept/AgentCommunication";
+import { FileManager } from "./Concept/FileManager";
+import { Instruction } from "./Concept/Instruction";
+import { StatusMachine } from "./Concept/StatusMachine";
 
-import { OntoTHUMDER } from "./Ontology/OntoTHUMDER";
-import { AgentCommunication } from "./Concept/AgentCommunication";
-import { InfoCommunication } from "./Concept/InfoCommunication";
+import { FileManagerAction } from "./AgentAction/FileManagerAction";
+
 import { Justification } from "./Predicate/Justification";
 import { SubInform } from "./Predicate/SubInform";
-import { Int32, Float32, Double64 } from "./Types";
-import { CONVERT } from "./Utils";
+import { AcceptSimulation } from "./Predicate/AcceptSimulation";
+
+import {
+    Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Short, UShort, Float32, Double64
+} from "./Utils/Types";
+import { Vocabulary } from "./Utils/Vocabulary";
+import { CONVERT } from "./Utils/Utils";
+
+import { OntoTHUMDER } from "./OntoTHUMDER";
 
 export {
+    // Utils
     CONVERT,
+
+    Int8,
+    UInt8,
+    Int16,
+    UInt16,
     Int32,
+    UInt32,
+    Int64,
+    UInt64,
+    Short,
+    UShort,
     Float32,
     Double64,
-
+    // Core
     Concept,
     AgentAction,
     Predicate,
 
     Vocabulary,
-    AID,
     ACLMessage,
-
-    OntoTHUMDER,
+    AID,
 
     // Concept
     AgentCommunication,
-    InfoCommunication,
+    Client,
+    Server,
+    Authentication,
+    AuthenticationToken,
+    FileManager,
+    Instruction,
+    StatusMachine,
 
     // AgentAction
-
+    FileManagerAction,
 
     // Predicate
+    AcceptSimulation,
     Justification,
-    SubInform
+    SubInform,
 
+    // THUMDER
+    OntoTHUMDER,
 }

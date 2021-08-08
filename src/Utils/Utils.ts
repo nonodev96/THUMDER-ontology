@@ -1,18 +1,17 @@
 export class CONVERT {
-    static NumberToUint32(x: number): number {
-        return x >>> 0;
-    }
 
-    static NumberToUint16(x: number): number {
-        return this.NumberToUint32(x) & 0xFFFF;
+    static NumberToInt8(x: number): number {
+        let r: number = 0;
+        let n = this.NumberToUint8(x);
+        if (n & 0x80)
+            r = 0xFFFFFF80 | (n & 0x7F);
+        else
+            r = n;
+        return (r);
     }
 
     static NumberToUint8(x: number): number {
         return this.NumberToUint32(x) & 0xFF;
-    }
-
-    static NumberToInt32(x: number): number {
-        return x >> 0;
     }
 
     static NumberToInt16(x: number): number {
@@ -25,14 +24,16 @@ export class CONVERT {
         return (r);
     }
 
-    static NumberToInt8(x: number): number {
-        let r: number = 0;
-        let n = this.NumberToUint8(x);
-        if (n & 0x80)
-            r = 0xFFFFFF80 | (n & 0x7F);
-        else
-            r = n;
-        return (r);
+    static NumberToUint16(x: number): number {
+        return this.NumberToUint32(x) & 0xFFFF;
+    }
+
+    static NumberToInt32(x: number): number {
+        return x >> 0;
+    }
+
+    static NumberToUint32(x: number): number {
+        return x >>> 0;
     }
 
     static StrToNumber(val: string, defaultVal: number = 0): number {

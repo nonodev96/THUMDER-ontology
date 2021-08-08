@@ -14,6 +14,8 @@ export enum InteractionProtocol {
     ITERATED_FIPA_REQUEST,
 }
 
+export type Language = string;
+
 export class Ontology {
 
     private name: string = ""

@@ -1,27 +1,6 @@
 import { Concept } from "../_Core/Concept";
 
-export class InfoCommunication implements Concept {
-
-}
-
-/*
-    AUTHENTICATE,
-    STATUS_MACHINE,
-    INSTRUCTION,
-    FILE_MANAGER,
-    FOLDER,
-    FILE
-*/
-
-export class Authenticate extends InfoCommunication {
-
-}
-
-export class StatusMachine extends InfoCommunication {
-
-}
-
-export class Instruction extends InfoCommunication {
+export class Instruction extends Concept {
     private _line: number;
     private _content: string
 
@@ -46,8 +25,12 @@ export class Instruction extends InfoCommunication {
     set content(value: string) {
         this._content = value;
     }
-}
 
-export class FileManager extends InfoCommunication {
 
+    toString(): string {
+        return {
+            line: this._line,
+            content: this._content,
+        }.toString();
+    }
 }

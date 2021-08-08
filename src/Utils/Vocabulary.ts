@@ -12,7 +12,6 @@ export enum TypeCommunication {
     FILE
 }
 
-
 export enum TypeCommunicationAction {
     AUTHENTICATE,
     STATUS_MACHINE,
@@ -51,7 +50,6 @@ export enum Incidence {
     UNKNOWN_MESSAGE,
     UNKNOWN_SERVER,
     UNKNOWN_CLIENT,
-    UNKNOWN_USER,
 }
 
 export interface Vocabulary {

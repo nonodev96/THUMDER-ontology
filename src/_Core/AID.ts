@@ -1,8 +1,6 @@
-import { Performative } from "./ACLMessage";
-
 interface AID_Constructor {
     name: string,
-    localName: string
+    localName?: string
 }
 
 export class AID {
@@ -35,11 +33,11 @@ export class AID {
         return values;
     }
 
-    public getName(value: string) {
+    public setName(value: string) {
         this.name = value;
     }
 
-    public setName(): string {
+    public getName(): string {
         return this.name;
     }
 

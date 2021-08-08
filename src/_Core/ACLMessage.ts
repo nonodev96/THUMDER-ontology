@@ -1,5 +1,5 @@
 import { AID } from "./AID";
-import { Ontology, InteractionProtocol } from "./Ontology";
+import { InteractionProtocol, Language, Ontology } from "./Ontology";
 
 export enum Performative {
     NONE,
@@ -28,21 +28,34 @@ export enum Performative {
     UNKNOWN,
 }
 
+interface IConstructorACLMessage {
+    performative: Performative
+}
+
 export class ACLMessage {
     private sender: AID;
     private ontology: Ontology;
     private protocol: InteractionProtocol;
+    private language: Language;
     private receivers: AID[];
+    private in_reply_to: string;
+    private reply_to: AID[];
+    private reply_with: string;
     private content: string;
     private performative: Performative;
 
-    constructor() {
+    constructor(obj?: IConstructorACLMessage) {
         this.sender = new AID();
-        this.ontology = new Ontology("NONE");
+        this.ontology = new Ontology("");
         this.protocol = InteractionProtocol.NONE;
+        this.language = "";
         this.receivers = [];
+        this.reply_to = [];
+        this.in_reply_to = "";
+        this.reply_with = "";
         this.content = "";
-        this.performative = Performative.NONE;
+
+        this.performative = obj && obj.performative || Performative.NONE;
     }
 
     public getSender(): AID {
@@ -69,6 +82,14 @@ export class ACLMessage {
         this.protocol = value;
     }
 
+    public getLanguage(): Language {
+        return this.language;
+    }
+
+    public setLanguage(value: Language) {
+        this.language = value;
+    }
+
     public addReceiver(aid: AID) {
         this.receivers.push(aid);
     }
@@ -81,12 +102,32 @@ export class ACLMessage {
         this.receivers = [];
     }
 
-    public getPerformative(value: Performative) {
+    public setPerformative(value: Performative) {
         this.performative = value;
     }
 
-    public setPerformative(): Performative {
+    public getPerformative(): Performative {
         return this.performative;
+    }
+
+    public setInReplyTo(reply: string) {
+        this.in_reply_to = reply;
+    }
+
+    private getAllReplyTo(): AID[] {
+        return this.reply_to;
+    }
+
+    public getInReplyTo(): string {
+        return this.in_reply_to;
+    }
+
+    public getReplyWith(): string {
+        return this.reply_with;
+    }
+
+    public setReplyWith(reply: string) {
+        this.reply_with = reply;
     }
 
     public getContent(): string {
@@ -97,13 +138,86 @@ export class ACLMessage {
         this.content = value;
     }
 
-    public getJSONString(): string {
+    public createReply(): ACLMessage {
+        const m = new ACLMessage({
+            performative: this.getPerformative()
+        });
+        const all_reply_to = this.getAllReplyTo();
+        for (const reply of all_reply_to) {
+            m.addReceiver(reply);
+        }
+        if (this.reply_to == null || this.reply_to.length === 0) {
+            m.addReceiver(this.getSender());
+        }
+        m.setLanguage(this.getLanguage());
+        m.setOntology(this.getOntology());
+        m.setProtocol(this.getProtocol());
+        m.setInReplyTo(this.getReplyWith());
+        if (this.sender !== undefined) {
+            m.setReplyWith(this.sender.getName() + new Date().toISOString());
+        } else {
+            m.setReplyWith("X" + new Date().toISOString());
+        }
+        /*
+            m.setConversationId(this.getConversationId());
+            const trace = this.getUserDefinedParameter("JADE-trace");
+            if (trace != null) {
+                m.addUserDefinedParameter("JADE-trace", trace);
+            }
+
+            if (this.messageEnvelope != null) {
+                m.setDefaultEnvelope();
+                const aclCodec = this.messageEnvelope.getAclRepresentation();
+                if (aclCodec != null) {
+                    m.getEnvelope().setAclRepresentation(aclCodec);
+                }
+            }
+            else {
+                m.setEnvelope(null);
+            }
+        */
+        return m;
+    }
+
+    public clearAllReplyTo(): void {
+        if (this.reply_to.length !== 0) {
+            this.reply_to = [];
+        }
+    }
+
+    public reset(): void {
+        //this.source = null;
+        this.receivers = [];
+        if (this.reply_to.length !== 0) {
+            this.reply_to = [];
+        }
+        this.performative = 10;
+        this.content = "";
+        //this.byteSequenceContent = null;
+        this.reply_with = "";
+        this.in_reply_to = "";
+        this.language = "";
+        this.ontology = new Ontology("");
+        //this.reply_byInMilliseconds = 0;
+        this.protocol = InteractionProtocol.NONE;
+        // this.conversation_id = null;
+        // if (this.userDefProps != null) {
+        //     this.userDefProps.clear();
+        // }
+        // this.postTimeStamp = -1;
+    }
+
+    public toString(): string {
         return {
-            ontology: this.ontology,
-            protocol: this.protocol,
             performative: this.performative,
+            language: this.language,
+            protocol: this.protocol,
+            ontology: this.ontology,
             sender: this.sender,
             receivers: this.receivers,
+            in_reply_to: this.in_reply_to,
+            reply_to: this.reply_to,
+            reply_with: this.reply_with,
             content: this.content,
         }.toString();
     }

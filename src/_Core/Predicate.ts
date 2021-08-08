@@ -1,6 +1,5 @@
 export abstract class Predicate {
 
-    public abstract toJSONString(): string;
+    public abstract toString?(): string;
 
-    public abstract log(): void
 }

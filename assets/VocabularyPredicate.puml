@@ -1,5 +1,5 @@
 @startuml{README_Predicate.png}
-!include config.skinparam
+'!include config.skinparam
 'https://plantuml.com/class-diagram
 /'
 Concept: Elementos que representan la información necesaria para representar los diferentes tipos de comunicación de la ontología.
@@ -9,17 +9,22 @@ Predicate: Elementos que representan las respuestas a los eventos para completar
 
 package "Predicate" #DDDDDD {
   interface Predicate
-  class AuthenticationResponse
-  abstract class Response extends AuthenticationResponse implements Predicate
-  class MakeFolderResponse implements Response
-  class MakeFileResponse extends MakeFolderResponse
-  class ModifyFolderResponse implements Response
-  class ModifyFileResponse extends ModifyFolderResponse
-  class DeleteFolderResponse implements Response
-  class DeleteFileResponse extends DeleteFolderResponse
-  class TreeFileManagerResponse implements Response
-  class StatusMachineResponse implements Response
-  class InstructionResponse implements Response
+'  class AuthenticationResponse
+'  abstract class Response extends AuthenticationResponse implements Predicate
+  class Justification implements Predicate
+  class AcceptSimulation implements Predicate
+  abstract class SubInform implements Predicate
+  class IncidenceSimulation extends SubInform
+  class ResultInstruction extends SubInform
+'  class StatusMachine extends SubInform
+
+  class FileManager implements Predicate
+'  class Show extends FileManager
+'  class Make extends FileManager
+'  class Modify extends FileManager
+'  class Delete extends FileManager
+
+  class Instruction implements Predicate
 }
 
 

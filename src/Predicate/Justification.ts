@@ -1,5 +1,5 @@
 import { Predicate } from "../_Core/Predicate";
-import { TypeCommunication, Reason } from "../Vocabulary";
+import { Reason, TypeCommunication } from "../Utils/Vocabulary";
 
 export class Justification implements Predicate {
     private _typeCommunication: TypeCommunication;
@@ -26,14 +26,10 @@ export class Justification implements Predicate {
         this._reason = value;
     }
 
-    public toJSONString(): string {
+    public toString(): string {
         return {
             type_communication: this.typeCommunication,
             reason: this.reason
         }.toString();
-    }
-
-    public log(): void {
-        console.log(this.toJSONString())
     }
 }
