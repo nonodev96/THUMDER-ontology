@@ -11,7 +11,17 @@ import { FileManager } from "./Concept/FileManager";
 import { Instruction } from "./Concept/Instruction";
 import { StatusMachine } from "./Concept/StatusMachine";
 
-import { FileManagerAction } from "./AgentAction/FileManagerAction";
+import {
+    CreateFolder,
+    CreateFile,
+    ModifyFolder,
+    ModifyFile,
+    DeleteFolder,
+    DeleteFile,
+    ShowFolder,
+    ShowFile,
+    FileManagerAction
+} from "./AgentAction/FileManagerAction";
 
 import { Justification } from "./Predicate/Justification";
 import { SubInform } from "./Predicate/SubInform";
@@ -69,6 +79,15 @@ export {
 
     // AgentAction
     FileManagerAction,
+
+    CreateFolder,
+    CreateFile,
+    ModifyFolder,
+    ModifyFile,
+    DeleteFolder,
+    DeleteFile,
+    ShowFolder,
+    ShowFile,
 
     // Predicate
     AcceptSimulation,
