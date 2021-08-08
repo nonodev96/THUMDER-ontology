@@ -2,7 +2,8 @@ import { Concept } from "./_Core/Concept";
 import { AgentAction } from "./_Core/AgentAction";
 import { Predicate } from "./_Core/Predicate";
 import { AID } from "./_Core/AID";
-import { ACLMessage } from "./_Core/ACLMessage";
+import { ACLMessage, Performative } from "./_Core/ACLMessage";
+import { InteractionProtocol, Ontology } from "./_Core/Ontology";
 
 import { Authentication, AuthenticationToken } from "./Concept/Authentication";
 import { AgentCommunication, Client, Server } from "./Concept/AgentCommunication";
@@ -40,14 +41,21 @@ export {
     UShort,
     Float32,
     Double64,
+
     // Core
     Concept,
     AgentAction,
     Predicate,
 
     Vocabulary,
+
     ACLMessage,
+    Performative,
+
     AID,
+
+    Ontology,
+    InteractionProtocol,
 
     // Concept
     AgentCommunication,

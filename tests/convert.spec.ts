@@ -1,4 +1,4 @@
-import { CONVERT } from "../src/main";
+import { CONVERT } from "../src";
 
 describe("Check Utils", () => {
     test("Check CONVERT 08 bits", () => {

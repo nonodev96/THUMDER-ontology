@@ -1,4 +1,4 @@
-import { ACLMessage, AID } from "../src/main";
+import { ACLMessage, AID } from "../src";
 import { Performative } from "../src/_Core/ACLMessage";
 import { InteractionProtocol, Ontology } from "../src/_Core/Ontology";
 

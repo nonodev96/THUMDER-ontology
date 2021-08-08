@@ -1,17 +1,20 @@
 {
-  "name": "thumder_ontology",
-  "version": "1.0.1",
+  "name": "thumder-ontology",
+  "version": "1.0.5",
   "description": "Ontology of THUMDER DLX - THe UltiMate Dlx EmulatoR",
   "author": {
     "name": "Antonio Mudarra Machuca",
     "email": "nonodev96@gmail.com"
   },
-  "main": "main.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/main.js",
-    "build:start": "tsc && node dist/main.js",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",

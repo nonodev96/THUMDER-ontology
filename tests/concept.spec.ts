@@ -1,4 +1,4 @@
-import { Client, Concept, Server } from "../src/main";
+import { Client, Concept, Server } from "../src";
 
 describe("Check Concept", () => {
     test("Check AgentCommunication", () => {
