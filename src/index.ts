@@ -38,13 +38,13 @@ import {
     Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Short, UShort, Float32, Double64
 } from "./Utils/Types";
 import { Vocabulary } from "./Utils/Vocabulary";
-import { CONVERT } from "./Utils/Utils";
+import { Utils } from "./Utils/Utils";
 
 import { OntoTHUMDER } from "./OntoTHUMDER";
 
 export {
     // Utils
-    CONVERT,
+    Utils,
 
     Int8,
     UInt8,

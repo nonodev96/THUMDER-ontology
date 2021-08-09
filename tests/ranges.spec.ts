@@ -1,4 +1,4 @@
-import { CONVERT, UInt8, UInt16, UInt32, UInt64 } from "../src";
+import { Utils, UInt8, UInt16, UInt32, UInt64 } from "../src";
 
 describe("Check ranges", () => {
     test("Check UInt8", () => {

@@ -1,6 +1,6 @@
 import { AID } from "./AID";
 import { InteractionProtocol, Language, Ontology } from "./Ontology";
-import { enumKeys } from "../Utils/Utils";
+import { Utils } from "../Utils/Utils";
 
 export enum Performative {
     NONE = 0,
@@ -112,7 +112,7 @@ export class ACLMessage {
     }
 
     public static getPerformative(perf: number): number {
-        for (const value in enumKeys(Performative)) {
+        for (const value in Utils.enumKeys(Performative)) {
             if (perf.toString() === Performative[value]) {
                 return parseInt(Performative[value]);
             }
