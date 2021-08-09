@@ -8,23 +8,27 @@ Predicate: Elementos que representan las respuestas a los eventos para completar
 '/
 
 package "Predicate" #DDDDDD {
-  interface Predicate
-'  class AuthenticationResponse
-'  abstract class Response extends AuthenticationResponse implements Predicate
-  class Justification implements Predicate
-  class AcceptSimulation implements Predicate
-  abstract class SubInform implements Predicate
-  class IncidenceSimulation extends SubInform
-  class ResultInstruction extends SubInform
-'  class StatusMachine extends SubInform
+interface Predicate
+    '  class AuthenticationResponse
+    '  abstract class Response extends AuthenticationResponse implements Predicate
+    class Justification implements Predicate
+    class AcceptSimulation implements Predicate
 
-  class FileManager implements Predicate
-'  class Show extends FileManager
-'  class Make extends FileManager
-'  class Modify extends FileManager
-'  class Delete extends FileManager
+    abstract class SubInform implements Predicate
+    class IncidenceSimulation extends SubInform
+    class ResultInstruction extends SubInform
+    '  class StatusMachine extends SubInform
 
-  class Instruction implements Predicate
+    abstract class SendInstruction implements Predicate
+    class SendInstructionExecute extends SendInstruction
+    class SendInstructionDebug extends SendInstruction
+
+    class FileManagerStatus implements Predicate
+    '  class Show extends FileManager
+    '  class Make extends FileManager
+    '  class Modify extends FileManager
+    '  class Delete extends FileManager
+
 }
 
 

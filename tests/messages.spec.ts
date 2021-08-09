@@ -1,8 +1,17 @@
-import { ACLMessage, AID } from "../src";
-import { Performative } from "../src/_Core/ACLMessage";
-import { InteractionProtocol, Ontology } from "../src/_Core/Ontology";
+import { ACLMessage, AID, MessageTemplate } from "../src";
+import { InteractionProtocol, Ontology } from "../src";
+import { Performative } from "../src";
 
 describe("Check Core of Agents", () => {
+
+    test("Check MessageTemplate", () => {
+        const template: MessageTemplate = MessageTemplate.and(
+            MessageTemplate.MatchProtocol(InteractionProtocol.FIPA_PROPOSE.toString()),
+            MessageTemplate.MatchPerformative(Performative.PROPOSE.toString())
+        );
+        expect(template.toMatch.toString()).toEqual('(( Protocol: 6 ) AND ( Performative: 12 ))');
+    });
+
     test("Check ACLMessage null", () => {
         const msg = new ACLMessage()
 

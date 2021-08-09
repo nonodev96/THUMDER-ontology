@@ -1,4 +1,4 @@
-import { Concept } from "../_Core/Concept";
+import { Concept } from "../_Core/content/Concept";
 
 export class AgentCommunication implements Concept {
 

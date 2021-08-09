@@ -1,4 +1,4 @@
-import { Predicate } from "../_Core/Predicate";
+import { Predicate } from "../_Core/content/Predicate";
 import { Instruction } from "../Concept/Instruction";
 import { StatusMachine } from "../Concept/StatusMachine";
 import { Incidence } from "../Utils/Vocabulary";

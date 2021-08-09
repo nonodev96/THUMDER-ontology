@@ -1,4 +1,4 @@
-import { Predicate } from "../_Core/Predicate";
+import { Predicate } from "../_Core/content/Predicate";
 import { Reason, TypeCommunication } from "../Utils/Vocabulary";
 
 export class Justification implements Predicate {

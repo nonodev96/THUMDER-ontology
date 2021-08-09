@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber "<b>[000]"
+skinparam defaultFontName consolas
+skinparam sequenceMessageAlign center
+
+'=== "Authentication" ==
+'Client ->  Server: REQUEST (Authentication)
+'Client <-- Server: ACCEPT-REQUEST (Authentication)
+'Client <-- Server: REJECT-REQUEST (Authentication)
+
+=== "CFP Simulation" ==
+
+Client ->  Server: CFP (CFPSimulation)
+Client <-- Server: REFUSE  (IncidenceSimulation)
+note right
+    Error in code
+end note
+Client <-- Server: PROPOSE (AcceptSimulation)
+note right
+    All correct in code
+end note
+
+Client ->  Server: ACCEPT-PROPOSAL (AcceptSimulation)
+
+==== EXECUTE ====
+group Repeat [Repeat until the last instruction]
+  Client <-  Server: PROPOSE (RequestInstruction)
+  Client --> Server: REFUSE-PROPOSAL (IncidenceSimulation)
+  Client --> Server: ACCEPT-PROPOSAL (**SendInstructionExecute**)
+  Client <-- Server: INFORM (ResultInstruction)
+end
+
+==== DEBUG ====
+group Repeat [Repeat until the last instruction]
+  Client <-  Server: PROPOSE (RequestInstruction)
+  Client --> Server: REFUSE-PROPOSAL (IncidenceSimulation)
+  Client --> Server: ACCEPT-PROPOSAL (**SendInstructionDebug**)
+  Client <-- Server: INFORM (ResultInstruction)
+end
+
+@enduml

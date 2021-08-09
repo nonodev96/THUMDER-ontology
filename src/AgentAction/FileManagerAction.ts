@@ -1,16 +1,14 @@
-import { AgentAction } from "../_Core/AgentAction";
+import { AgentAction } from "../_Core/content/AgentAction";
 import { Md5 } from "md5-typescript";
 
 export class FileManagerAction implements AgentAction {
 
     private path: string;
     private folderName: string;
-    private filename: string;
 
     constructor(path: string, folderName: string) {
         this.path = path;
         this.folderName = folderName;
-        this.filename = "";
     }
 
     public getPath(): string {
@@ -27,14 +25,6 @@ export class FileManagerAction implements AgentAction {
 
     public setFolderName(value: string) {
         this.folderName = value;
-    }
-
-    public getFilename(): string {
-        return this.filename;
-    }
-
-    public setFilename(value: string) {
-        this.filename = value;
     }
 }
 

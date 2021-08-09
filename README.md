@@ -11,6 +11,8 @@
 npm install thumder-ontology --save
 ```
 
+## Example
+
 ```ts
 import { ACLMessage } from "thumder-ontology";
 
@@ -27,6 +29,12 @@ class Test {
     }
 }
 ```
+
+## Communication
+
+
+
+## Design of ontology
 
 ### Concept
 

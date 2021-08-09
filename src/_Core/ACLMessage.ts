@@ -1,8 +1,9 @@
 import { AID } from "./AID";
 import { InteractionProtocol, Language, Ontology } from "./Ontology";
+import { enumKeys } from "../Utils/Utils";
 
 export enum Performative {
-    NONE,
+    NONE = 0,
     ACCEPT_PROPOSAL,
     AGREE,
     CANCEL,
@@ -108,6 +109,15 @@ export class ACLMessage {
 
     public getPerformative(): Performative {
         return this.performative;
+    }
+
+    public static getPerformative(perf: number): number {
+        for (const value in enumKeys(Performative)) {
+            if (perf.toString() === Performative[value]) {
+                return parseInt(Performative[value]);
+            }
+        }
+        return 0;
     }
 
     public setInReplyTo(reply: string) {

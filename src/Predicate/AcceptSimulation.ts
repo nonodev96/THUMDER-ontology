@@ -1,4 +1,4 @@
-import { Predicate } from "../_Core/Predicate";
+import { Predicate } from "../_Core/content/Predicate";
 import { Md5 } from "md5-typescript";
 
 export class AcceptSimulation implements Predicate {

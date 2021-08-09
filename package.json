@@ -1,6 +1,6 @@
 {
   "name": "thumder-ontology",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Ontology of THUMDER DLX - THe UltiMate Dlx EmulatoR",
   "author": {
     "name": "Antonio Mudarra Machuca",
@@ -27,6 +27,7 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "class-transformer": "^0.4.0",
     "datastructures-js": "^10.1.1",
     "md5-typescript": "^1.0.5"
   },

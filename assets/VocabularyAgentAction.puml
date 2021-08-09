@@ -22,11 +22,8 @@ package "AgentAction" #DDDDDD {
     '  class InstructionRequest implements AgentAction
     '  class StatusMachineRequest implements AgentAction
 
-    class ProposeSimulation implements AgentAction
-    class RequestInstruction implements AgentAction
-    class RequestInstructionExecute extends RequestInstruction
-    class RequestInstructionDebug extends RequestInstruction
     class InformSimulation implements AgentAction
+    class CFPSimulation implements AgentAction
 
     abstract class FileManagerAction implements AgentAction
     class CreateFolder extends FileManagerAction

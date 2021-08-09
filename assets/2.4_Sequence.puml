@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber "<b>[000]"
+skinparam defaultFontName consolas
+skinparam sequenceMessageAlign center
+
+=== "Request Modify a file" ==
+...Every time you save or exit the section...
+Client -> Server:   REQUEST (ModifyFile)
+note right
+  Set hash of file
+end note
+Client <-- Server:  ACCEPT-REQUEST (FileManagerStatus)
+Client <-- Server:  REJECT-REQUEST (FileManagerStatus)
+note left
+  Get hash of file
+end note
+
+
+@enduml
