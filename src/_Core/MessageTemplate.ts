@@ -81,7 +81,7 @@ export class MessageTemplate {
     }
 
     toString(): string {
-        return {}.toString();
+        return this.toMatch.toString();
     }
 }
 
