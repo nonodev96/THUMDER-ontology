@@ -2,7 +2,12 @@ import { ACLMessage } from "./ACLMessage";
 import { AID } from "./AID";
 import { InteractionProtocol } from "./Ontology";
 
-
+/**
+ *  MessageTemplate para poder discriminar los mensajes que recibimos del buzón:
+ *
+ *  TODO:
+ *  - Filtrador en el core
+ */
 export class MessageTemplate {
     public toMatch: MatchExpression;
 
@@ -58,6 +63,7 @@ export class MessageTemplate {
     static MatchContent(value: string): MessageTemplate {
         return new MessageTemplate(new Literal(value, 12));
     }
+
     /*
     public MatchReplyByDate(value: Date): MessageTemplate {
         return new MessageTemplate(new Literal(value, 14));
@@ -65,17 +71,17 @@ export class MessageTemplate {
     */
 
 
-    static and(op1: MessageTemplate, op2: MessageTemplate): MessageTemplate {
+    public static And(op1: MessageTemplate, op2: MessageTemplate): MessageTemplate {
         const e = new AndExpression(op1.toMatch, op2.toMatch);
         return new MessageTemplate(e);
     }
 
-    static or(op1: MessageTemplate, op2: MessageTemplate): MessageTemplate {
+    public static Or(op1: MessageTemplate, op2: MessageTemplate): MessageTemplate {
         const e = new OrExpression(op1.toMatch, op2.toMatch);
         return new MessageTemplate(e);
     }
 
-    static not(op1: MessageTemplate): MessageTemplate {
+    public static Not(op1: MessageTemplate): MessageTemplate {
         const e = new NotExpression(op1.toMatch);
         return new MessageTemplate(e);
     }
@@ -126,9 +132,11 @@ class Literal implements MatchExpression {
                 return CaseInsensitiveString.equalsIgnoreCase(this.matchValue, msg.getReplyWith());
             }
             case 9: {
+                // CODE
                 return false;
             }
             case 10: {
+                // CODE
                 return false;
             }
             case 11: {
@@ -217,7 +225,7 @@ class Literal implements MatchExpression {
                 return "( ReplyByDate: " + this.matchValue + " )";
             }
             default: {
-                return "No slot. This casa should never occur !!!";
+                return "No slot. This case should never occur !!!";
             }
         }
     }

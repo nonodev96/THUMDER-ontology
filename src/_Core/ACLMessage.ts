@@ -164,7 +164,7 @@ export class ACLMessage {
         m.setProtocol(this.getProtocol());
         m.setInReplyTo(this.getReplyWith());
         if (this.sender !== undefined) {
-            m.setReplyWith(this.sender.getName() + new Date().toISOString());
+            m.setReplyWith(this.sender.name + new Date().toISOString());
         } else {
             m.setReplyWith("X" + new Date().toISOString());
         }

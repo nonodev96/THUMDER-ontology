@@ -5,7 +5,7 @@ import { Performative } from "../src";
 describe("Check Core of Agents", () => {
 
     test("Check MessageTemplate", () => {
-        const template: MessageTemplate = MessageTemplate.and(
+        const template: MessageTemplate = MessageTemplate.And(
             MessageTemplate.MatchProtocol(InteractionProtocol.FIPA_PROPOSE.toString()),
             MessageTemplate.MatchPerformative(Performative.PROPOSE.toString())
         );

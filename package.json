@@ -12,10 +12,12 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "dev": "tsc -w",
+    "dev:server": "tsc -w --project ./example/server/tsconfig.json",
+    "node:server" :"node ./example/server/dist/main.js",
+    "dev:client": "tsc -w --project ./example/client/tsconfig.json",
+    "node:client" :"node ./example/client/dist/main.js",
     "test": "jest",
-    "test:server": "tsc --project ./example/server/tsconfig.json && node ./example/server/dist/main.js",
-    "test:client": "tsc --project ./example/client/tsconfig.json && node ./example/client/dist/main.js",
     "prepublish": "npm run build && npm run test"
   },
   "repository": {

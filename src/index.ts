@@ -1,3 +1,5 @@
+import { Behaviour } from "./_Core/behaviours/Behaviour";
+
 import { Action } from "./_Core/Action";
 import { Concept } from "./_Core/content/Concept";
 import { AgentAction } from "./_Core/content/AgentAction";
@@ -5,6 +7,8 @@ import { Predicate } from "./_Core/content/Predicate";
 import { AID } from "./_Core/AID";
 import { ACLMessage, Performative } from "./_Core/ACLMessage";
 import { MessageTemplate } from "./_Core/MessageTemplate";
+
+import { CoreAgents } from "./_Core/CoreAgents";
 
 // Type of message controller
 import { AchieveREInitiator } from "./_Core/proto/AchieveREInitiator";
@@ -65,6 +69,7 @@ export {
     Predicate,
     MessageTemplate,
 
+    Behaviour,
     ACLMessage,
     Performative,
     AID,
@@ -100,4 +105,6 @@ export {
 
     // THUMDER
     OntoTHUMDER,
+
+    CoreAgents
 }
