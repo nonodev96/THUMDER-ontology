@@ -3,40 +3,46 @@ import { Behaviour } from "../behaviours/Behaviour"
 
 export abstract class ContractNetInitiator extends Behaviour {
     private readonly className: string
+    private readonly cfp: ACLMessage
 
-    protected constructor() {
-        super()
+    protected constructor(taskName: string, cfp: ACLMessage) {
+        super(taskName)
         this.className = ContractNetInitiator.name
+        this.cfp = cfp
     }
 
     public getClassName(): string {
         return this.className
     }
 
-    public handleAllResponses(messages: ACLMessage[]): void {
+    public getCFP(): ACLMessage {
+        return this.cfp
+    }
+
+    public handleAllResponses(messages: ACLMessage[]): ACLMessage | null {
         for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.ACCEPT_PROPOSAL:
-                    this.handleAcceptProposal(message)
-                    break
+                    return this.handleAcceptProposal(message)
                 case Performative.PROPOSE:
-                    this.handlePropose(message)
-                    break
+                    return this.handlePropose(message)
                 case Performative.REFUSE:
-                    this.handleRefuse(message)
-                    break
+                    return this.handleRefuse(message)
                 case Performative.INFORM:
-                    this.handleInform(message)
+                    return this.handleInform(message)
+                default:
+                    console.log("Error")
                     break
             }
         }
+        return null
     }
 
-    public abstract handleAcceptProposal(propose: ACLMessage): void
+    public abstract handleAcceptProposal(propose: ACLMessage): null
 
-    public abstract handlePropose(inform: ACLMessage): void
+    public abstract handlePropose(inform: ACLMessage): null
 
-    public abstract handleRefuse(refuse: ACLMessage): void
+    public abstract handleRefuse(refuse: ACLMessage): null
 
-    public abstract handleInform(inform: ACLMessage): void
+    public abstract handleInform(inform: ACLMessage): null
 }

@@ -1,12 +1,12 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-autonumber "<b>[000]"
+autonumber "<b>[000]</b>"
 skinparam defaultFontName consolas
 skinparam sequenceMessageAlign center
 
 === "Request Modify a folder" ==
-Client -> Server:   REQUEST (ModifyFolder)
-Client <-- Server:  ACCEPT-REQUEST (FileManagerStatus)
-Client <-- Server:  REJECT-REQUEST (FileManagerStatus)
+Client -> Server:  REQUEST (ModifyFolder)
+Client <-- Server: ACCEPT-REQUEST (FileManagerStatus)
+Client <-- Server: REJECT-REQUEST (FileManagerStatus)
 
 @enduml

@@ -3,36 +3,39 @@ import { Behaviour } from "../behaviours/Behaviour"
 
 export abstract class ProposeInitiator extends Behaviour {
     private readonly className: string
-    private readonly message: ACLMessage
+    private readonly propose: ACLMessage
 
-    protected constructor(message: ACLMessage) {
-        super()
+    protected constructor(taskName: string, propose: ACLMessage) {
+        super(taskName)
         this.className = ProposeInitiator.name
-        this.message = message
+        this.propose = propose
     }
 
     public getClassName(): string {
         return this.className
     }
 
-    public getMessage(): ACLMessage {
-        return this.message
+    public getPropose(): ACLMessage {
+        return this.propose
     }
 
-    public handleAllResponses(messages: ACLMessage[]): void {
+    public handleAllResponses(messages: ACLMessage[]): ACLMessage | null {
         for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.ACCEPT_PROPOSAL:
-                    this.handleAcceptProposal(message)
-                    break
+                    return this.handleAcceptProposal(message)
                 case Performative.REJECT_PROPOSAL:
-                    this.handleRejectProposal(message)
-                    break
+                    return this.handleRejectProposal(message)
+                case Performative.INFORM:
+                    return this.handleInform(message)
             }
         }
+        return null
     }
 
-    public abstract handleAcceptProposal(msg: ACLMessage): void
+    public abstract handleAcceptProposal(msg: ACLMessage): null
 
-    public abstract handleRejectProposal(msg: ACLMessage): void
+    public abstract handleRejectProposal(msg: ACLMessage): null
+
+    public abstract handleInform(msg: ACLMessage): null
 }

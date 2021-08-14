@@ -1,44 +1,44 @@
 import { ACLMessage, Performative } from "../ACLMessage"
 import { Behaviour } from "../behaviours/Behaviour"
-import { plainToClass } from "class-transformer"
 
 export abstract class AchieveREInitiator extends Behaviour {
     private readonly className: string
-    private readonly message: ACLMessage
+    private readonly request: ACLMessage
 
-    protected constructor(message: ACLMessage) {
-        super()
+    protected constructor(taskName: string, request: ACLMessage) {
+        super(taskName)
         this.className = AchieveREInitiator.name
-        this.message = message
+        this.request = request
     }
 
     public getClassName(): string {
         return this.className
     }
 
-    public getMessage(): ACLMessage {
-        return this.message
+    public getRequest(): ACLMessage {
+        return this.request
     }
 
-    public handleAllResponses(messages: ACLMessage[]): void {
+    public handleAllResponses(messages: ACLMessage[]): ACLMessage | null {
         for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.AGREE:
-                    this.handleAgree(message)
-                    break
+                    return this.handleAgree(message)
                 case Performative.REFUSE:
-                    this.handleRefuse(message)
-                    break
+                    return this.handleRefuse(message)
                 case Performative.INFORM:
-                    this.handleInform(message)
+                    return this.handleInform(message)
+                default:
+                    console.log("Error")
                     break
             }
         }
+        return null
     }
 
-    abstract handleAgree(agree: ACLMessage): void
+    abstract handleAgree(agree: ACLMessage): null
 
-    abstract handleRefuse(refuse: ACLMessage): void
+    abstract handleRefuse(refuse: ACLMessage): null
 
-    abstract handleInform(inform: ACLMessage): void
+    abstract handleInform(inform: ACLMessage): null
 }

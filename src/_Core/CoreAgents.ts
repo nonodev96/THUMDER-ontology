@@ -8,17 +8,19 @@ import { ContractNetInitiator } from "./proto/ContractNetInitiator"
 import { ContractNetResponder } from "./proto/ContractNetResponder"
 import { ProposeInitiator } from "./proto/ProposeInitiator"
 import { ProposeResponder } from "./proto/ProposeResponder"
+import { plainToClass } from "class-transformer";
+import { Ontology } from "./Ontology";
 
 
 export class CoreAgents {
     private socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>
     public readonly id: string
-    private weak: WeakMap<{ key: string }, Behaviour>
+    private readonly weak: Map<string, Behaviour>
 
     constructor(socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>) {
         this.socket = socket
         this.id = socket.id
-        this.weak = new WeakMap<{ key: string }, Behaviour>()
+        this.weak = new Map<string, Behaviour>()
         this.initEventListener()
     }
 
@@ -28,51 +30,29 @@ export class CoreAgents {
      */
     public addTask(classHandler: Behaviour) {
         // read the task name
-        if (!this.weak.has({key: classHandler.getClassName()})) {
-            this.weak.set({key: classHandler.getClassName()}, classHandler)
-            console.log("add Task: ", classHandler.getClassName())
+        console.log("add Task: ", classHandler.getTaskName(), " - ", classHandler.getClassName())
 
-            switch (classHandler.getClassName()) {
-                case AchieveREInitiator.name:
-                    this.sendToServer(classHandler.getMessage())
-                    break;
-                case AchieveREResponder.name:
+        this.weak.set(classHandler.getTaskName(), classHandler)
 
-                    break;
-                case ContractNetInitiator.name:
-                    // this.send(classHandler.getMessage())
-                    break;
-                case ContractNetResponder.name:
+        switch (classHandler.getClassName()) {
+            case AchieveREInitiator.name:
+                this.sendToServer((<AchieveREInitiator>classHandler).getRequest())
+                break;
+            case AchieveREResponder.name:
 
-                    break;
-                case ProposeInitiator.name:
-                    // this.send(classHandler.getMessage())
-                    break;
-                case ProposeResponder.name:
+                break;
+            case ContractNetInitiator.name:
+                this.sendToServer((<ContractNetInitiator>classHandler).getCFP())
+                break;
+            case ContractNetResponder.name:
 
-                    break;
-            }
+                break;
+            case ProposeInitiator.name:
+                this.sendToServer((<ProposeInitiator>classHandler).getPropose())
+                break;
+            case ProposeResponder.name:
 
-            // Init events listeners
-            this.socket.on("messages", async (args) => {
-                console.log("server")
-                classHandler.handler(args)
-                const response = await classHandler.getResponse()
-                if (response !== null) {
-                    this.socket.emit(this.id.toString(), response)
-                }
-            })
-
-            // Process the messages of clients
-            this.socket.on(this.socket.id, async (args) => {
-                console.log("client", args)
-                classHandler.handler(args)
-                const response = await classHandler.getResponse()
-                console.log("client process the response", response)
-                // if (response !== null) {
-                //     this.socket.emit(this.id.toString(), response)
-                // }
-            })
+                break;
         }
     }
 
@@ -84,9 +64,7 @@ export class CoreAgents {
         const allReceivers = message.getAllReceivers()
         for (const receive of allReceivers) {
             const address = receive.getAddress()
-            this.socket.emit(address, message, (args: any) => {
-                console.log("args", args)
-            })
+            this.socket.emit(address, message)
         }
     }
 
@@ -96,6 +74,42 @@ export class CoreAgents {
      * @private
      */
     private initEventListener() {
+        // Init events listeners
+        this.socket.on("messages", async (args) => {
+            try {
+                const message = plainToClass(ACLMessage, <ACLMessage>args)
+                const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
+                const classHandler = this.weak.get(ontology.getName())
+
+                if (classHandler !== undefined) {
+                    const response = await classHandler.handler(args)
+                    if (response !== null) {
+                        this.socket.emit(this.id.toString(), response)
+                    }
+                } else {
+                    console.log("classHandler undefined")
+                }
+            } catch (e) {
+                console.error(e)
+            }
+        })
+        // Process the messages of clients
+        this.socket.on(this.socket.id, async (args) => {
+            try {
+                const message = plainToClass(ACLMessage, <ACLMessage>args)
+                const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
+                console.log(this.weak.get(ontology.getName()))
+                const classHandler = this.weak.get(ontology.getName())
+                if (classHandler !== undefined) {
+                    const response = await classHandler.handler(args)
+                    console.log("client process the response", response)
+                } else {
+                    console.log("classHandler undefined")
+                }
+            } catch (e) {
+                console.error(e)
+            }
+        })
         // this.socket.on(this.socket.id, async (args) => {
         //     console.log("private chat", args)
         // })

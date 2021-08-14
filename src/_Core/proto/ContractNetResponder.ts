@@ -6,36 +6,34 @@ export abstract class ContractNetResponder extends Behaviour {
     public myPropose: ACLMessage
     public cfp: ACLMessage
 
-    protected constructor() {
-        super()
+    protected constructor(taskName: string) {
+        super(taskName)
         this.className = ContractNetResponder.name
-        this.cfp = new ACLMessage()
         this.myPropose = new ACLMessage()
+        this.cfp = new ACLMessage()
     }
 
     public getClassName(): string {
         return this.className
     }
 
-    public handleAllResponses(messages: ACLMessage[]): void {
+    public handleAllResponses(messages: ACLMessage[]): ACLMessage | null {
         for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.CFP:
-                    this.handleCfp(message)
-                    break
+                    return this.handleCfp(message)
                 case Performative.ACCEPT_PROPOSAL:
-                    this.handleAcceptProposal(this.cfp, this.myPropose, message)
-                    break
+                    return this.handleAcceptProposal(this.cfp, this.myPropose, message)
                 case Performative.REJECT_PROPOSAL:
-                    this.handleRejectProposal(this.cfp, this.myPropose, message)
-                    break
+                    return this.handleRejectProposal(this.cfp, this.myPropose, message)
             }
         }
+        return null
     }
 
     public abstract handleCfp(cfp: ACLMessage): ACLMessage
 
     public abstract handleAcceptProposal(cfp: ACLMessage, propose: ACLMessage, accept: ACLMessage): ACLMessage
 
-    public abstract handleRejectProposal(cfp: ACLMessage, propose: ACLMessage, reject: ACLMessage): void
+    public abstract handleRejectProposal(cfp: ACLMessage, propose: ACLMessage, reject: ACLMessage): ACLMessage
 }

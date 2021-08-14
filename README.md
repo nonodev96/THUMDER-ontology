@@ -14,7 +14,9 @@
 ```
 npm install thumder-ontology --save
 ```
+
 ### Via npm with version
+
 ```
 npm install thumder-ontology@<version> --save
 ```
@@ -69,29 +71,28 @@ const coreAgents = new CoreAgents(socket)
 coreAgents.addTask(new Task_RequestResponse())
 ```
 
-## Communication
-
-
-
 ## Design of ontology
 
-### Concept
+#### Concept
 
 ![README_Concept](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/VocabularyConcept.puml)
 
-### AgentAction
+#### AgentAction
 
 ![README_AgentAction](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/VocabularyAgentAction.puml)
 
-### Predicate
+#### Predicate
 
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/VocabularyPredicate.puml)
 
 
 # Tasks
-![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.3.1_Sequence.puml)
+
+<div style="text-align: center">
 
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.3_Sequence.puml)
+
+![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.3.1_Sequence.puml)
 
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.4.1_Sequence.puml)
 
@@ -102,3 +103,5 @@ coreAgents.addTask(new Task_RequestResponse())
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.5_Sequence.puml)
 
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/2.6_Sequence.puml)
+
+</div>

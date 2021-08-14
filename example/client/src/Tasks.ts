@@ -1,38 +1,74 @@
-import { Performative, AchieveREInitiator, ACLMessage } from "../../../dist";
+import { Performative, AchieveREInitiator, ACLMessage, ContractNetInitiator } from "../../../dist";
 
-export class Task_RequestInitiator extends AchieveREInitiator {
+export class Task_CreateFile_RequestInitiator extends AchieveREInitiator {
+    constructor(taskName: string, message: ACLMessage) {
+        super(taskName, message)
+        console.log("Task_CreateFile_RequestInitiator")
+    }
 
-    constructor(message: ACLMessage) {
-        super(message)
+    handleAgree(agree: ACLMessage): null {
+        console.log("Task_CreateFile_RequestInitiator handleAgree")
+        return null
+    }
+
+    handleRefuse(refuse: ACLMessage): null {
+        console.log("Task_CreateFile_RequestInitiator handleRefuse")
+        return null
+    }
+
+    handleInform(inform: ACLMessage): null {
+        console.log("Task_CreateFile_RequestInitiator handleInform")
+        return null
+    }
+}
+
+export class Task_CreateFolder_RequestInitiator extends AchieveREInitiator {
+    constructor(taskName: string, message: ACLMessage) {
+        super(taskName, message)
+        console.log("Task_CreateFolder_RequestInitiator")
+    }
+
+    handleAgree(agree: ACLMessage): null {
+        console.log("Task_CreateFolder_RequestInitiator handleAgree")
+        return null
+    }
+
+    handleRefuse(refuse: ACLMessage): null {
+        console.log("Task_CreateFolder_RequestInitiator handleRefuse")
+        return null
+    }
+
+    handleInform(inform: ACLMessage): null {
+        console.log("Task_CreateFolder_RequestInitiator handleInform")
+        return null
+    }
+}
+
+export class Task_ContractNetInitiator extends ContractNetInitiator {
+
+    constructor(taskName: string, cfp: ACLMessage) {
+        super(taskName, cfp)
         console.log("Task_RequestInitiator")
     }
 
-    handleAllResponses(responses: ACLMessage[]): void {
-        console.log('Task_Request handleAllResponses')
-        for (const response of responses) {
-            switch (response.getPerformative()) {
-                case Performative.AGREE:
-                    this.handleAgree(response)
-                    break
-                case Performative.REFUSE:
-                    this.handleRefuse(response)
-                    break
-                case Performative.INFORM:
-                    this.handleInform(response)
-                    break
-            }
-        }
+    handlePropose(inform: ACLMessage): null {
+        console.log("handlePropose")
+        return null
     }
 
-    handleAgree(agree: ACLMessage): void {
-        console.log("handleAgree")
+    handleAcceptProposal(propose: ACLMessage): null {
+        console.log("handleAcceptProposal")
+        return null
     }
 
-    handleRefuse(refuse: ACLMessage): void {
+    handleRefuse(refuse: ACLMessage): null {
         console.log("handleRefuse")
+        return null
     }
 
-    handleInform(inform: ACLMessage): void {
+    handleInform(inform: ACLMessage): null {
         console.log("handleInform")
+        return null
     }
+
 }

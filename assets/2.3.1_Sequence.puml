@@ -1,13 +1,13 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-autonumber "<b>[000]"
+autonumber "<b>[000]</b>"
 skinparam defaultFontName consolas
 skinparam sequenceMessageAlign center
 
 === "Request Create a file" ==
 '...5 minutes latter...
-Client -> Server:   REQUEST (CreateFile)
-Client <-- Server:  ACCEPT-REQUEST (FileManagerStatus)
-Client <-- Server:  REJECT-REQUEST (FileManagerStatus)
+Client -> Server:  REQUEST (CreateFile)
+Client <-- Server: ACCEPT-REQUEST (FileManagerStatus)
+Client <-- Server: REJECT-REQUEST (FileManagerStatus)
 
 @enduml

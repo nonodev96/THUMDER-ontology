@@ -4,8 +4,8 @@ import { Behaviour } from "../behaviours/Behaviour"
 export abstract class AchieveREResponder extends Behaviour {
     private readonly className: string
 
-    protected constructor() {
-        super()
+    protected constructor(taskName: string) {
+        super(taskName)
         this.className = AchieveREResponder.name
     }
 
@@ -13,17 +13,17 @@ export abstract class AchieveREResponder extends Behaviour {
         return this.className
     }
 
-    public handleAllResponses(messages: ACLMessage[]) {
+    public handleAllResponses(messages: ACLMessage[]): ACLMessage | null {
         for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.REQUEST:
-                    this.handleRequest(message)
-                    break
+                    return this.handleRequest(message)
                 default:
                     console.log("Error")
                     break
             }
         }
+        return null
     }
 
     public abstract handleRequest(request: ACLMessage): ACLMessage
