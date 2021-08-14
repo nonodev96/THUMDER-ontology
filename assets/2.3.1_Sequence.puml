@@ -4,9 +4,9 @@ autonumber "<b>[000]"
 skinparam defaultFontName consolas
 skinparam sequenceMessageAlign center
 
-=== "Request Make a file" ==
+=== "Request Create a file" ==
 '...5 minutes latter...
-Client -> Server:   REQUEST (MakeFile)
+Client -> Server:   REQUEST (CreateFile)
 Client <-- Server:  ACCEPT-REQUEST (FileManagerStatus)
 Client <-- Server:  REJECT-REQUEST (FileManagerStatus)
 

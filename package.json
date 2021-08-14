@@ -1,16 +1,16 @@
 {
   "name": "thumder-ontology",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Ontology of THUMDER DLX - THe UltiMate Dlx EmulatoR",
   "author": {
     "name": "Antonio Mudarra Machuca",
     "email": "nonodev96@gmail.com"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "dev": "tsc -w",
     "dev:server": "tsc -w --project ./example/server/tsconfig.json",
@@ -23,6 +23,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nonodev96/thumder_ontology.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nonodev96/thumder_ontology/issues"
   },
   "keywords": [
     "dlx",

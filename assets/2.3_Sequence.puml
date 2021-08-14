@@ -4,8 +4,8 @@ autonumber "<b>[000]"
 skinparam defaultFontName consolas
 skinparam sequenceMessageAlign center
 
-=== "Request Make a folder" ==
-Client -> Server:   REQUEST (MakeFolder)
+=== "Request Create a folder" ==
+Client -> Server:   REQUEST (CreateFolder)
 Client <-- Server:  ACCEPT-REQUEST (FileManagerStatus)
 Client <-- Server:  REJECT-REQUEST (FileManagerStatus)
 

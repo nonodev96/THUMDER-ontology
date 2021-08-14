@@ -1,16 +1,14 @@
-import { Action } from "../Action";
-import { ACLMessage, Performative } from "../ACLMessage";
-import { Behaviour } from "../behaviours/Behaviour";
-import { plainToClass } from "class-transformer";
+import { ACLMessage, Performative } from "../ACLMessage"
+import { Behaviour } from "../behaviours/Behaviour"
+import { plainToClass } from "class-transformer"
 
-export class AchieveREInitiator extends Behaviour {
+export abstract class AchieveREInitiator extends Behaviour {
+    private readonly className: string
+    private readonly message: ACLMessage
 
-    private readonly className: string;
-    private readonly message: ACLMessage;
-
-    constructor(message: ACLMessage) {
-        super();
-        this.className = AchieveREInitiator.name;
+    protected constructor(message: ACLMessage) {
+        super()
+        this.className = AchieveREInitiator.name
         this.message = message
     }
 
@@ -18,19 +16,12 @@ export class AchieveREInitiator extends Behaviour {
         return this.className
     }
 
-    handler(object: any): Promise<any> {
-        // const { allResponses } = object;
-        const action = plainToClass(Action, <Action>object);
-        const messages = plainToClass(ACLMessage, <ACLMessage[]>action.getActionObject())
-        this.handleAllResponses(messages);
-
-        return new Promise((resolve, reject) => {
-            resolve(true)
-        })
+    public getMessage(): ACLMessage {
+        return this.message
     }
 
-    handleAllResponses(responses: ACLMessage[]): void {
-        for (const message of responses) {
+    public handleAllResponses(messages: ACLMessage[]): void {
+        for (const message of messages) {
             switch (message.getPerformative()) {
                 case Performative.AGREE:
                     this.handleAgree(message)
@@ -45,23 +36,9 @@ export class AchieveREInitiator extends Behaviour {
         }
     }
 
-    handleAllResultNotifications(resultNotifications: ACLMessage[]): void {
+    abstract handleAgree(agree: ACLMessage): void
 
-    }
+    abstract handleRefuse(refuse: ACLMessage): void
 
-    handleOutOfSequence(msg: ACLMessage): void {
-
-    }
-
-    handleAgree(agree: ACLMessage): void {
-
-    }
-
-    handleRefuse(refuse: ACLMessage): void {
-
-    }
-
-    handleInform(inform: ACLMessage): void {
-
-    }
+    abstract handleInform(inform: ACLMessage): void
 }
