@@ -30,7 +30,7 @@ describe("Check Core of Agents", () => {
             "sender": {
                 "name": "",
                 "localName": "",
-                "addresses": {},
+                "address": "",
             },
         })
     });
@@ -55,14 +55,14 @@ describe("Check Core of Agents", () => {
             "receivers": [{
                 "name": "Bill-Gates",
                 "localName": "192.168.1.144-Bill-Gates",
-                "addresses": {},
+                "address": "",
             }],
             "reply_to": [],
             "reply_with": "",
             "sender": {
                 "name": "Anders-Hejlsberg",
                 "localName": "192.168.1.144-Anders-Hejlsberg",
-                "addresses": {},
+                "address": "",
             },
         })
     });
@@ -70,11 +70,18 @@ describe("Check Core of Agents", () => {
     test("Check ACLMessage SUBSCRIBE", () => {
         const msg = new ACLMessage({performative: Performative.SUBSCRIBE})
         msg.setProtocol(InteractionProtocol.FIPA_SUBSCRIBE);
-        msg.setSender(new AID({name: "Ada-Lovelace", localName: "192.168.1.144-Ada-Lovelace"}));
+        msg.setSender(new AID({
+            name: "Ada-Lovelace",
+            localName: "192.168.1.144-Ada-Lovelace",
+            address: "192.168.1.144"
+        }));
         msg.setLanguage("THUMDER")
         msg.setOntology(new Ontology("Ontology-THUMDER"))
-        msg.addReceiver(new AID({name: "James-Gosling", localName: "192.168.1.144-James-Gosling"}))
-
+        msg.addReceiver(new AID({
+            name: "James-Gosling",
+            localName: "192.168.1.144-James-Gosling",
+            address: "192.168.1.144"
+        }))
         expect(msg).toMatchObject({
             "content": "",
             "in_reply_to": "",
@@ -87,14 +94,14 @@ describe("Check Core of Agents", () => {
             "receivers": [{
                 "name": "James-Gosling",
                 "localName": "192.168.1.144-James-Gosling",
-                "addresses": {},
+                "address": "192.168.1.144",
             }],
             "reply_to": [],
             "reply_with": "",
             "sender": {
                 "name": "Ada-Lovelace",
                 "localName": "192.168.1.144-Ada-Lovelace",
-                "addresses": {},
+                "address": "192.168.1.144",
             },
         })
     });

@@ -2,7 +2,7 @@ import * as inquirer from "inquirer"
 import {
     ACLMessage,
     AID,
-    CoreAgents,
+    CoreAgentsClient,
     CreateFile,
     CreateFolder,
     Ontology,
@@ -14,21 +14,23 @@ import {
     Task_CreateFile_RequestInitiator,
     Task_CreateFolder_RequestInitiator
 } from "./Tasks"
+import { socket } from "./main";
 
 export class ConsoleManager {
     private coreAgents
 
-    constructor(coreAgents: CoreAgents) {
+    constructor(coreAgents: CoreAgentsClient) {
         this.coreAgents = coreAgents
     }
 
-    async init() {
+    public async init() {
         let loop = true
         while (loop) {
             console.log("\n", "\n", "\n")
             console.log("1. Test Make-File")
             console.log("2. Test Make-Folder")
             console.log("3. CFP Simulation")
+            console.log("9. Emit")
             console.log("0. Exit")
             let p = await inquirer.prompt({
                 type: "input",
@@ -45,6 +47,9 @@ export class ConsoleManager {
                     break;
                 case "3":
                     await this.cfpNewSimulation()
+                    break;
+                case "9":
+                    await this.emit()
                     break;
                 case "0":
                     loop = false
@@ -63,14 +68,18 @@ export class ConsoleManager {
         }
     }
 
-    async requestCreateFile() {
+    private async emit() {
+        socket.emit("messages", {pepe: 'object'})
+    }
+
+    private async requestCreateFile() {
         const createFile = new CreateFile('path/to/folder', 'tests/', 'example_00.s')
         const createFile_string = JSON.stringify(createFile)
         const message = new ACLMessage()
         message.setSender(new AID({
             name: "Client",
-            localName: "Client-" + this.coreAgents.id,
-            address: this.coreAgents.id
+            localName: "Client-" + this.coreAgents.clientID,
+            address: this.coreAgents.clientID
         }))
         message.setPerformative(Performative.REQUEST)
         message.setOntology(new Ontology("Make-File"))
@@ -79,14 +88,14 @@ export class ConsoleManager {
         this.coreAgents.addTask(new Task_CreateFile_RequestInitiator("Make-File", message))
     }
 
-    async requestCreateFolder() {
+    private async requestCreateFolder() {
         const createFolder = new CreateFolder('path/to/folder', 'tests/', 'newFolder/')
         const createFolder_string = JSON.stringify(createFolder)
         const message = new ACLMessage()
         message.setSender(new AID({
             name: "Client",
-            localName: "Client-" + this.coreAgents.id,
-            address: this.coreAgents.id
+            localName: "Client-" + this.coreAgents.clientID,
+            address: this.coreAgents.clientID
         }))
         message.setPerformative(Performative.REQUEST)
         message.setOntology(new Ontology("Make-Folder"))
@@ -95,14 +104,14 @@ export class ConsoleManager {
         this.coreAgents.addTask(new Task_CreateFolder_RequestInitiator("Make-Folder", message))
     }
 
-    async cfpNewSimulation() {
+    private async cfpNewSimulation() {
         const cfpSimulation = new CFPSimulation()
         const cfpSimulation_string = JSON.stringify(cfpSimulation)
         const cfp = new ACLMessage()
         cfp.setSender(new AID({
             name: "Client",
-            localName: "Client-" + this.coreAgents.id,
-            address: this.coreAgents.id
+            localName: "Client-" + this.coreAgents.clientID,
+            address: this.coreAgents.clientID
         }))
         cfp.setPerformative(Performative.CFP)
         cfp.setOntology(new Ontology("CFPSimulation"))

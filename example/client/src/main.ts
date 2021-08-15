@@ -1,33 +1,33 @@
 import { io } from "socket.io-client"
-import { CoreAgents } from "../../../dist"
+import { CoreAgentsClient } from "../../../dist"
 import { ConsoleManager } from "./ConsoleManager";
 
-export const ws = io('ws://localhost:3000/')
+export const socket = io('ws://localhost:3000/')
+export const coreAgents = new CoreAgentsClient(<any>socket)
+export const consoleManager = new ConsoleManager(coreAgents)
 
-ws.on("connect_error", (error) => {
+socket.on("connect_error", (error) => {
     console.log('error')
-    ws.disconnect()
+    socket.disconnect()
+})
+
+socket.on("disconnect", (reason) => {
+    console.log('disconnect')
+    socket.disconnect()
+})
+
+socket.on("messages", (messages) => {
+    console.log('messages', messages)
 })
 
 // client-side
-ws.on("connect", () => {
-    console.log('connect')
-    console.log(ws.id)
-
-    // Define and init core agents
-    const coreAgents = new CoreAgents(<any>ws)
-
-    // Define and init the console manager
-    const consoleManager = new ConsoleManager(coreAgents)
-
-    consoleManager.init().then((r) => {
-        console.log('End init ConsoleManager: ', r)
-    })
+socket.on("connect", () => {
+    console.log('connect', socket.id)
+    coreAgents.clientID = socket.id
 })
 
-ws.on("disconnect", (reason) => {
-    console.log('disconnect')
-    ws.disconnect()
+consoleManager.init().then((r) => {
+    console.log('End ConsoleManager: ', r)
 })
 
 console.log('End client')

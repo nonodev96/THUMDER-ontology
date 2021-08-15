@@ -8,7 +8,8 @@ import { AID } from "./_Core/AID";
 import { ACLMessage, Performative } from "./_Core/ACLMessage";
 import { MessageTemplate } from "./_Core/MessageTemplate";
 
-import { CoreAgents } from "./_Core/CoreAgents";
+import { CoreAgentsServer } from "./_Core/CoreAgentsServer";
+import { CoreAgentsClient } from "./_Core/CoreAgentsClient";
 
 // Type of message controller
 import { AchieveREInitiator } from "./_Core/proto/AchieveREInitiator";
@@ -106,5 +107,6 @@ export {
     // THUMDER
     OntoTHUMDER,
 
-    CoreAgents
+    CoreAgentsServer,
+    CoreAgentsClient
 }
