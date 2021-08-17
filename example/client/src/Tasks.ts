@@ -1,5 +1,27 @@
 import { Performative, AchieveREInitiator, ACLMessage, ContractNetInitiator } from "../../../dist";
 
+export class Task_ModifyFile_RequestInitiator extends AchieveREInitiator {
+    constructor(taskName: string, message: ACLMessage) {
+        super(taskName, message)
+        console.log("Task_ModifyFile_RequestInitiator")
+    }
+
+    handleAgree(agree: ACLMessage): null {
+        console.log("Task_ModifyFile_RequestInitiator handleAgree")
+        return null
+    }
+
+    handleRefuse(refuse: ACLMessage): null {
+        console.log("Task_ModifyFile_RequestInitiator handleRefuse")
+        return null
+    }
+
+    handleInform(inform: ACLMessage): null {
+        console.log("Task_ModifyFile_RequestInitiator handleInform")
+        return null
+    }
+}
+
 export class Task_CreateFile_RequestInitiator extends AchieveREInitiator {
     constructor(taskName: string, message: ACLMessage) {
         super(taskName, message)

@@ -60,12 +60,12 @@ export class CoreAgentsServer {
 
 
     /**
-     * Process the ACLMessages of clients
+     * Process the ACLMessages of clients and response to client
      */
     public addNewSocket(socket: Socket) {
         this.socketsClientMap.set(socket.id, socket)
 
-        socket.on("messages", async (args) => {
+        socket.on("messages", async (args, callback) => {
             try {
                 const message = plainToClass(ACLMessage, <ACLMessage>args)
                 const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
@@ -74,13 +74,18 @@ export class CoreAgentsServer {
                 if (classHandler !== undefined) {
                     const response = await classHandler.handler(args)
                     if (response !== null) {
-                        // TODO
                         // response -> replyTo
-                        this.serverSocket.emit("messages", response)
+                        // console.log("args: ", args)
+                        // console.log("typeof callback: ", typeof callback)
+                        if (typeof callback === "function") {
+                            callback(response)
+                        }
+
                     }
                 } else {
                     console.log("classHandler undefined")
                 }
+
             } catch (e) {
                 console.error(e)
             }

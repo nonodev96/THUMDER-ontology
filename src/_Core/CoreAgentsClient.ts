@@ -30,45 +30,75 @@ export class CoreAgentsClient {
      * Add new task to handler and process
      * @param classHandler
      */
-    public addTask(classHandler: Behaviour) {
+    public async addTask(classHandler: Behaviour): Promise<any> {
         // read the task name
         console.log("add Task: ", classHandler.getTaskName(), " - ", classHandler.getClassName())
+        return new Promise(async (resolve, reject) => {
 
-        this.weak.set(classHandler.getTaskName(), classHandler)
-        switch (classHandler.getClassName()) {
-            case AchieveREInitiator.name:
-                this.sendToServer((<AchieveREInitiator>classHandler).getRequest())
-                break;
-            case AchieveREResponder.name:
+            let response: any
 
-                break;
-            case ContractNetInitiator.name:
-                this.sendToServer((<ContractNetInitiator>classHandler).getCFP())
-                break;
-            case ContractNetResponder.name:
+            this.weak.set(classHandler.getTaskName(), classHandler)
+            switch (classHandler.getClassName()) {
+                case AchieveREInitiator.name:
+                    response = await this.sendToServer((<AchieveREInitiator>classHandler).getRequest())
+                    resolve(response)
+                    break;
+                case AchieveREResponder.name:
 
-                break;
-            case ProposeInitiator.name:
-                this.sendToServer((<ProposeInitiator>classHandler).getPropose())
-                break;
-            case ProposeResponder.name:
+                    break;
+                case ContractNetInitiator.name:
+                    response = await this.sendToServer((<ContractNetInitiator>classHandler).getCFP())
+                    resolve(response)
+                    break;
+                case ContractNetResponder.name:
 
-                break;
-        }
+                    break;
+                case ProposeInitiator.name:
+                    response = await this.sendToServer((<ProposeInitiator>classHandler).getPropose())
+                    resolve(response)
+                    break;
+                case ProposeResponder.name:
+
+                    break;
+                default:
+                    reject("Error default, task no defined")
+                    break;
+            }
+
+        })
     }
 
-    public sendToServer(msg: ACLMessage) {
-        console.log("sendToServer")
-        this.clientSocket.emit("messages", msg)
+    /**
+     * Client send a message to server and await to response
+     *
+     * @param msg
+     */
+    public sendToServer(msg: ACLMessage): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.clientSocket.emit("messages", msg, (response: any) => {
+                console.log('resolve', response)
+                resolve(response)
+            })
+        })
     }
 
+
+    /**
+     * Client response to server
+     *
+     * @private
+     */
     private initEventListener() {
-        this.clientSocket.on("messages", async (args) => {
+        this.clientSocket.on("tests", async (args, callback) => {
+            console.log(args)
+            callback({client: 'Hello World'})
+        })
+        this.clientSocket.on("messages", async (args, callback) => {
             try {
                 const message = plainToClass(ACLMessage, <ACLMessage>args)
                 const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
-                console.log(this.weak.get(ontology.getName()))
                 const classHandler = this.weak.get(ontology.getName())
+
                 if (classHandler !== undefined) {
                     const response = await classHandler.handler(args)
                     console.log("client process the response", response)

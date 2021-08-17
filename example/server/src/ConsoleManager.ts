@@ -72,8 +72,8 @@ export class ConsoleManager {
 
         const socket = this.socketsMap.get(p.action)
         if (socket != undefined) {
-            socket.emit('messages', {
-                test: 'message'
+            socket.emit('messages', {server: 'Hello world!'}, (response: any) => {
+                console.log('Send To: response:', response)
             })
         }
     }

@@ -5,6 +5,7 @@ import {
     CoreAgentsClient,
     CreateFile,
     CreateFolder,
+    ModifyFile,
     Ontology,
     Performative,
     CFPSimulation
@@ -12,7 +13,8 @@ import {
 import {
     Task_ContractNetInitiator,
     Task_CreateFile_RequestInitiator,
-    Task_CreateFolder_RequestInitiator
+    Task_CreateFolder_RequestInitiator,
+    Task_ModifyFile_RequestInitiator
 } from "./Tasks"
 import { socket } from "./main";
 
@@ -29,7 +31,9 @@ export class ConsoleManager {
             console.log("\n", "\n", "\n")
             console.log("1. Test Make-File")
             console.log("2. Test Make-Folder")
-            console.log("3. CFP Simulation")
+            console.log("3. Test Modify-File")
+            console.log("4. CFP Simulation")
+
             console.log("9. Emit")
             console.log("0. Exit")
             let p = await inquirer.prompt({
@@ -46,6 +50,9 @@ export class ConsoleManager {
                     await this.requestCreateFolder()
                     break;
                 case "3":
+                    await this.requestModifyFile()
+                    break;
+                case "4":
                     await this.cfpNewSimulation()
                     break;
                 case "9":
@@ -69,7 +76,25 @@ export class ConsoleManager {
     }
 
     private async emit() {
-        socket.emit("messages", {pepe: 'object'})
+        socket.emit("tests", {client: 'Hello world console manager'}, (response: any) => {
+            console.log("response console manager: ", response)
+        })
+    }
+
+    private async requestModifyFile() {
+        const modifyFile = new ModifyFile('path/to/folder', 'tests/', 'example_00.s')
+        const modifyFile_string = JSON.stringify(modifyFile)
+        const message = new ACLMessage()
+        message.setSender(new AID({
+            name: "Client",
+            localName: "Client-" + this.coreAgents.clientID,
+            address: this.coreAgents.clientID
+        }))
+        message.setPerformative(Performative.REQUEST)
+        message.setOntology(new Ontology("Modify-File"))
+        message.setContent(modifyFile_string)
+
+        return this.coreAgents.addTask(new Task_ModifyFile_RequestInitiator("Modify-File", message))
     }
 
     private async requestCreateFile() {
@@ -85,7 +110,7 @@ export class ConsoleManager {
         message.setOntology(new Ontology("Make-File"))
         message.setContent(createFile_string)
 
-        this.coreAgents.addTask(new Task_CreateFile_RequestInitiator("Make-File", message))
+        return this.coreAgents.addTask(new Task_CreateFile_RequestInitiator("Make-File", message))
     }
 
     private async requestCreateFolder() {
@@ -101,7 +126,7 @@ export class ConsoleManager {
         message.setOntology(new Ontology("Make-Folder"))
         message.setContent(createFolder_string)
 
-        this.coreAgents.addTask(new Task_CreateFolder_RequestInitiator("Make-Folder", message))
+        return this.coreAgents.addTask(new Task_CreateFolder_RequestInitiator("Make-Folder", message))
     }
 
     private async cfpNewSimulation() {
@@ -117,7 +142,7 @@ export class ConsoleManager {
         cfp.setOntology(new Ontology("CFPSimulation"))
         cfp.setContent(cfpSimulation_string)
 
-        this.coreAgents.addTask(new Task_ContractNetInitiator("CFP-Simulation", cfp))
+        return this.coreAgents.addTask(new Task_ContractNetInitiator("CFP-Simulation", cfp))
     }
 
 }
