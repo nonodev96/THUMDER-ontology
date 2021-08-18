@@ -1,9 +1,6 @@
-import { ACLMessage, AID, MessageTemplate } from "../src";
-import { InteractionProtocol, Ontology } from "../src";
-import { Performative } from "../src";
+import { ACLMessage, AID, MessageTemplate, InteractionProtocol, Ontology, Performative } from "../src";
 
 describe("Check Core of Agents", () => {
-
     test("Check MessageTemplate", () => {
         const template: MessageTemplate = MessageTemplate.And(
             MessageTemplate.MatchProtocol(InteractionProtocol.FIPA_PROPOSE.toString()),
@@ -11,10 +8,8 @@ describe("Check Core of Agents", () => {
         );
         expect(template.toMatch.toString()).toEqual('(( Protocol: 6 ) AND ( Performative: 12 ))');
     });
-
     test("Check ACLMessage null", () => {
         const msg = new ACLMessage()
-
         expect(msg).toMatchObject({
             "content": "",
             "in_reply_to": "",
@@ -34,7 +29,6 @@ describe("Check Core of Agents", () => {
             },
         })
     });
-
     test("Check ACLMessage REQUEST", () => {
         const msg = new ACLMessage({performative: Performative.REQUEST})
         msg.setProtocol(InteractionProtocol.FIPA_REQUEST);
@@ -42,7 +36,6 @@ describe("Check Core of Agents", () => {
         msg.setLanguage("THUMDER")
         msg.setOntology(new Ontology("Ontology-THUMDER"))
         msg.addReceiver(new AID({name: "Bill-Gates", localName: "192.168.1.144-Bill-Gates"}))
-
         expect(msg).toMatchObject({
             "content": "",
             "in_reply_to": "",
@@ -66,7 +59,6 @@ describe("Check Core of Agents", () => {
             },
         })
     });
-
     test("Check ACLMessage SUBSCRIBE", () => {
         const msg = new ACLMessage({performative: Performative.SUBSCRIBE})
         msg.setProtocol(InteractionProtocol.FIPA_SUBSCRIBE);

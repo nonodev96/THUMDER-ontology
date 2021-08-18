@@ -1,6 +1,6 @@
 {
   "name": "thumder-ontology",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Ontology of THUMDER DLX - THe UltiMate Dlx EmulatoR",
   "author": {
     "name": "Antonio Mudarra Machuca",
@@ -14,9 +14,9 @@
   "scripts": {
     "dev": "tsc -w",
     "dev:server": "tsc -w --project ./example/server/tsconfig.json",
-    "node:server" :"node ./example/server/dist/main.js",
+    "node:server": "node ./example/server/dist/main.js",
     "dev:client": "tsc -w --project ./example/client/tsconfig.json",
-    "node:client" :"node ./example/client/dist/main.js",
+    "node:client": "node ./example/client/dist/main.js",
     "build": "tsc",
     "test": "jest",
     "prepublish": "npm run build && npm run test"

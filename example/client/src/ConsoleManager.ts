@@ -41,22 +41,22 @@ export class ConsoleManager {
                 name: "action",
                 message: "Enter action:"
             })
-
+            let responseProcess
             switch (p.action) {
                 case "1":
-                    await this.requestCreateFile()
+                    responseProcess = await this.requestCreateFile()
                     break;
                 case "2":
-                    await this.requestCreateFolder()
+                    responseProcess = await this.requestCreateFolder()
                     break;
                 case "3":
-                    await this.requestModifyFile()
+                    responseProcess = await this.requestModifyFile()
                     break;
                 case "4":
-                    await this.cfpNewSimulation()
+                    responseProcess = await this.cfpNewSimulation()
                     break;
                 case "9":
-                    await this.emit()
+                    responseProcess = await this.emit()
                     break;
                 case "0":
                     loop = false
@@ -65,6 +65,7 @@ export class ConsoleManager {
                 default:
                     break;
             }
+            console.log("responseProcess", responseProcess)
 
 
             await new Promise(resolve => {

@@ -1,3 +1,11 @@
+import { ACLMessage } from "../_Core/ACLMessage";
+
+export type TaskContainer = {
+    taskName: string,
+    status: 'ok' | 'error',
+    message: ACLMessage | null
+}
+
 /**
  * https://docs.microsoft.com/es-es/cpp/cpp/data-type-ranges?view=msvc-160
  */

@@ -1,5 +1,6 @@
 import { ACLMessage } from "../ACLMessage"
 import { plainToClass } from "class-transformer"
+import { Utils } from "../../Utils/Utils";
 
 export abstract class Behaviour {
     private readonly taskName: string
@@ -8,20 +9,20 @@ export abstract class Behaviour {
         this.taskName = taskName
     }
 
-    public getTaskName(): string{
+    public getTaskName(): string {
         return this.taskName
     }
 
-    public handler(object: any): Promise<ACLMessage | null> {
+    public handler(object: ACLMessage[] | ACLMessage | null): Promise<ACLMessage | null> {
         return new Promise((resolve, reject) => {
-            // const { allResponses } = object
-            if (object instanceof Object) {
-                const messages = plainToClass(ACLMessage, <ACLMessage>object)
-                resolve(this.handleAllResponses([messages]))
-            }
-            if (object instanceof Array) {
+            if (Utils.isArray(object)) {
                 const messages = plainToClass(ACLMessage, <ACLMessage[]>object)
                 resolve(this.handleAllResponses(messages))
+            } else if (Utils.isObject(object) || object instanceof ACLMessage) {
+                const messages = plainToClass(ACLMessage, <ACLMessage>object)
+                resolve(this.handleAllResponses([messages]))
+            } else {
+                resolve(null)
             }
         })
     }

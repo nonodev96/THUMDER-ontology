@@ -1,26 +1,4 @@
-import { Performative, AchieveREInitiator, ACLMessage, ContractNetInitiator } from "../../../dist";
-
-export class Task_ModifyFile_RequestInitiator extends AchieveREInitiator {
-    constructor(taskName: string, message: ACLMessage) {
-        super(taskName, message)
-        console.log("Task_ModifyFile_RequestInitiator")
-    }
-
-    handleAgree(agree: ACLMessage): null {
-        console.log("Task_ModifyFile_RequestInitiator handleAgree")
-        return null
-    }
-
-    handleRefuse(refuse: ACLMessage): null {
-        console.log("Task_ModifyFile_RequestInitiator handleRefuse")
-        return null
-    }
-
-    handleInform(inform: ACLMessage): null {
-        console.log("Task_ModifyFile_RequestInitiator handleInform")
-        return null
-    }
-}
+import { AchieveREInitiator, ACLMessage, ContractNetInitiator } from "../../../dist";
 
 export class Task_CreateFile_RequestInitiator extends AchieveREInitiator {
     constructor(taskName: string, message: ACLMessage) {
@@ -28,19 +6,20 @@ export class Task_CreateFile_RequestInitiator extends AchieveREInitiator {
         console.log("Task_CreateFile_RequestInitiator")
     }
 
-    handleAgree(agree: ACLMessage): null {
+    handleAgree(agree: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleAgree")
-        return null
+        console.log(agree.getReplyWith())
+        return "Agree"
     }
 
-    handleRefuse(refuse: ACLMessage): null {
+    handleRefuse(refuse: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleRefuse")
-        return null
+        return "Refuse"
     }
 
-    handleInform(inform: ACLMessage): null {
+    handleInform(inform: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleInform")
-        return null
+        return "Inform"
     }
 }
 
@@ -50,19 +29,41 @@ export class Task_CreateFolder_RequestInitiator extends AchieveREInitiator {
         console.log("Task_CreateFolder_RequestInitiator")
     }
 
-    handleAgree(agree: ACLMessage): null {
+    handleAgree(agree: ACLMessage): any {
         console.log("Task_CreateFolder_RequestInitiator handleAgree")
-        return null
+        return "Agree"
     }
 
-    handleRefuse(refuse: ACLMessage): null {
+    handleRefuse(refuse: ACLMessage): any {
         console.log("Task_CreateFolder_RequestInitiator handleRefuse")
-        return null
+        return "Refuse"
     }
 
-    handleInform(inform: ACLMessage): null {
+    handleInform(inform: ACLMessage): any {
         console.log("Task_CreateFolder_RequestInitiator handleInform")
-        return null
+        return "Inform"
+    }
+}
+
+export class Task_ModifyFile_RequestInitiator extends AchieveREInitiator {
+    constructor(taskName: string, message: ACLMessage) {
+        super(taskName, message)
+        console.log("Task_ModifyFile_RequestInitiator")
+    }
+
+    handleAgree(agree: ACLMessage): any {
+        console.log("Task_ModifyFile_RequestInitiator handleAgree")
+        return "Agree"
+    }
+
+    handleRefuse(refuse: ACLMessage): any {
+        console.log("Task_ModifyFile_RequestInitiator handleRefuse")
+        return "Refuse"
+    }
+
+    handleInform(inform: ACLMessage): any {
+        console.log("Task_ModifyFile_RequestInitiator handleInform")
+        return "Inform"
     }
 }
 

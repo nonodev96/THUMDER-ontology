@@ -9,20 +9,18 @@ import { ContractNetResponder } from "./proto/ContractNetResponder";
 import { ProposeInitiator } from "./proto/ProposeInitiator";
 import { ProposeResponder } from "./proto/ProposeResponder";
 import { Ontology } from "./Ontology";
+import { TaskContainer } from "../Utils/Types";
 
 
 export class CoreAgentsClient {
     public clientID
-
-    private readonly weak: Map<string, Behaviour>
-
+    private tasksMap: Map<string, Behaviour>
     public clientSocket: Socket;
 
     constructor(clientSocket: Socket) {
         this.clientSocket = clientSocket
         this.clientID = clientSocket.id
-
-        this.weak = new Map<string, Behaviour>()
+        this.tasksMap = new Map<string, Behaviour>()
         this.initEventListener()
     }
 
@@ -30,14 +28,11 @@ export class CoreAgentsClient {
      * Add new task to handler and process
      * @param classHandler
      */
-    public async addTask(classHandler: Behaviour): Promise<any> {
-        // read the task name
-        console.log("add Task: ", classHandler.getTaskName(), " - ", classHandler.getClassName())
+    public async addTask(classHandler: Behaviour): Promise<TaskContainer> {
+        // console.log("add Task: ", classHandler.getTaskName(), " - ", classHandler.getClassName())
         return new Promise(async (resolve, reject) => {
-
             let response: any
-
-            this.weak.set(classHandler.getTaskName(), classHandler)
+            this.tasksMap.set(classHandler.getTaskName(), classHandler)
             switch (classHandler.getClassName()) {
                 case AchieveREInitiator.name:
                     response = await this.sendToServer((<AchieveREInitiator>classHandler).getRequest())
@@ -64,7 +59,6 @@ export class CoreAgentsClient {
                     reject("Error default, task no defined")
                     break;
             }
-
         })
     }
 
@@ -73,10 +67,20 @@ export class CoreAgentsClient {
      *
      * @param msg
      */
-    public sendToServer(msg: ACLMessage): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            this.clientSocket.emit("messages", msg, (response: any) => {
-                console.log('resolve', response)
+    public sendToServer(msg: ACLMessage): Promise<TaskContainer> {
+        return new Promise<TaskContainer>((resolve, reject) => {
+            this.clientSocket.emit("messages", msg, async (response: TaskContainer) => {
+
+                const classHandler = this.tasksMap.get(response.taskName)
+                let taskResolve, taskResolveDeleted
+                if (classHandler !== undefined) {
+                    taskResolve = await classHandler.handler(response.message)
+                    taskResolveDeleted = this.tasksMap.delete(response.taskName)
+                } else {
+                    reject("classHandler undefined - Task no response")
+                }
+
+                // console.log('resolve', response, taskResolve, taskResolveDeleted)
                 resolve(response)
             })
         })
@@ -89,19 +93,31 @@ export class CoreAgentsClient {
      * @private
      */
     private initEventListener() {
-        this.clientSocket.on("tests", async (args, callback) => {
-            console.log(args)
-            callback({client: 'Hello World'})
+
+        this.clientSocket.on("connect_error", (error) => {
+            console.log('error', error)
+            this.clientSocket.disconnect()
         })
+
+        this.clientSocket.on("disconnect", (reason) => {
+            console.log('disconnect', reason)
+            this.clientSocket.disconnect()
+        })
+
+        this.clientSocket.on("connect", (args) => {
+            console.log('connect', this.clientSocket.id)
+            this.clientID = this.clientSocket.id
+        })
+
         this.clientSocket.on("messages", async (args, callback) => {
             try {
                 const message = plainToClass(ACLMessage, <ACLMessage>args)
                 const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
-                const classHandler = this.weak.get(ontology.getName())
+                const classHandler = this.tasksMap.get(ontology.getName())
 
                 if (classHandler !== undefined) {
                     const response = await classHandler.handler(args)
-                    console.log("client process the response", response)
+                    // console.log("client process the response", response)
                 } else {
                     console.log("classHandler undefined")
                 }

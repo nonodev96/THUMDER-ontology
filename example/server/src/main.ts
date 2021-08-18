@@ -9,18 +9,18 @@ import {
 } from "./Tasks";
 
 export const httpServer = createServer();
-export const io = new Server(httpServer);
+export const server = new Server(httpServer);
 
 export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-export const consoleManager = new ConsoleManager(<any>io)
-export const coreAgentsServer = new CoreAgentsServer(<any>io);
+export const consoleManager = new ConsoleManager(<any>server)
+export const coreAgentsServer = new CoreAgentsServer(<any>server);
 coreAgentsServer.addTask(new Task_CreateFile_RequestResponse("Make-File"));
 coreAgentsServer.addTask(new Task_CreateFolder_RequestResponse("Make-Folder"));
 coreAgentsServer.addTask(new Task_ModifyFile_RequestResponse("Modify-File"));
 
 
-io.on("connection", (socket) => {
+server.on("connection", (socket) => {
     console.log("Connection new Socket", socket.id)
 
     socket.on("disconnect", (args) => {

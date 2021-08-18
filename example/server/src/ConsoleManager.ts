@@ -85,8 +85,8 @@ export class ConsoleManager {
             message: "Enter message to send:"
         })
 
-        this.io.emit('messages', {
-            test: 'message all: ' + p.action
+        this.io.emit('messages', {message: 'message all: ' + p.action}, (response: any) => {
+            console.log(response)
         })
     }
 }

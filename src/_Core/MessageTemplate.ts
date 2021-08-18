@@ -1,12 +1,11 @@
 import { ACLMessage } from "./ACLMessage";
 import { AID } from "./AID";
-import { InteractionProtocol } from "./Ontology";
 
 /**
  *  MessageTemplate para poder discriminar los mensajes que recibimos del buzón:
  *
  *  TODO:
- *  - Filtrador en el core
+ *  - Filter in ../_Core
  */
 export class MessageTemplate {
     public toMatch: MatchExpression;

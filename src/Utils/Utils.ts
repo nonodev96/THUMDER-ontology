@@ -1,5 +1,49 @@
 export namespace Utils {
 
+    export function isArray(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == Array;
+    }
+
+    export function isBoolean(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == Boolean;
+    }
+
+    export function isFunction(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == Function;
+    }
+
+    export function isNumber(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == Number;
+    }
+
+    export function isString(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == String;
+    }
+
+    export function isObject(obj: any) {
+        return obj !== undefined && obj !== null && obj.constructor == Object;
+    }
+
+    export function isInstanced(obj: any) {
+        if (obj === undefined || obj === null) {
+            return false;
+        } else if (isArray(obj)) {
+            return false;
+        } else if (isBoolean(obj)) {
+            return false;
+        } else if (isFunction(obj)) {
+            return false;
+        } else if (isNumber(obj)) {
+            return false;
+        } else if (isObject(obj)) {
+            return false;
+        } else if (isString(obj)) {
+            return false;
+        }
+
+        return true;
+    }
+
     export function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
         return Object.keys(obj).filter(k => Number.isNaN(+k)) as K[];
     }

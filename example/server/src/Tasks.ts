@@ -1,5 +1,5 @@
-import { plainToClass } from "class-transformer";
-import { Performative, AchieveREResponder, ACLMessage, CreateFile, ModifyFile } from "../../../dist";
+import { plainToClass, TransformClassToPlain } from "class-transformer";
+import { Performative, AchieveREResponder, ACLMessage, CreateFile, ModifyFile, FileManagerStatus } from "../../../dist";
 
 export class Task_CreateFile_RequestResponse extends AchieveREResponder {
     constructor(taskName: string) {
@@ -13,6 +13,7 @@ export class Task_CreateFile_RequestResponse extends AchieveREResponder {
 
         const message_reply = request.createReply();
         message_reply.setPerformative(Performative.AGREE);
+        message_reply.setContent(JSON.stringify(new FileManagerStatus('ok')))
         return message_reply
     }
 }

@@ -36,9 +36,9 @@ export abstract class AchieveREInitiator extends Behaviour {
         return null
     }
 
-    abstract handleAgree(agree: ACLMessage): null
+    abstract handleAgree(agree: ACLMessage): any
 
-    abstract handleRefuse(refuse: ACLMessage): null
+    abstract handleRefuse(refuse: ACLMessage): any
 
-    abstract handleInform(inform: ACLMessage): null
+    abstract handleInform(inform: ACLMessage): any
 }

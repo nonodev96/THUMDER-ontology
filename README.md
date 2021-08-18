@@ -38,7 +38,9 @@ message.setPerformative(Performative.REQUEST)
 message.setOntology(new Ontology("Make-File"))
 message.setContent(createFile_string)
 
-this.coreAgents.addTask(new Task_CreateFile_RequestInitiator("Make-File", message))
+this.coreAgents.addTask(new Task_CreateFile_RequestInitiator("Make-File", message)).then((data) => {
+    // ... CODE
+})
 ```
 
 ### Define Task - SERVER
@@ -72,19 +74,19 @@ export class Task_CreateFile_RequestInitiator extends AchieveREInitiator {
         console.log("Task_CreateFile_RequestInitiator")
     }
 
-    handleAgree(agree: ACLMessage): null {
+    handleAgree(agree: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleAgree")
-        return null
+        return "Agree"
     }
 
-    handleRefuse(refuse: ACLMessage): null {
+    handleRefuse(refuse: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleRefuse")
-        return null
+        return "Refuse"
     }
 
-    handleInform(inform: ACLMessage): null {
+    handleInform(inform: ACLMessage): any {
         console.log("Task_CreateFile_RequestInitiator handleInform")
-        return null
+        return "Inform"
     }
 }
 ```
@@ -131,7 +133,6 @@ socket.on("connect", () => {
 #### Predicate
 
 ![README_Predicate](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/nonodev96/THUMDER_ontology/master/assets/VocabularyPredicate.puml)
-
 
 # Tasks
 
