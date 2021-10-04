@@ -1,4 +1,5 @@
-import { Client, Concept, Server } from "../src";
+import { Client, Server } from "../src";
+import { AID } from "../src";
 
 describe("Check Concept", () => {
     test("Check AgentCommunication", () => {
@@ -9,5 +10,18 @@ describe("Check Concept", () => {
         const server = new Server("");
         server.setName("Server-123456")
         expect(server).toMatchObject(new Server("Server-123456"))
+    });
+
+    test("Check AID", () => {
+        const sender = new AID({
+            name: 'Client',
+            localName: 'Client-123456',
+            address: 'localhost:4200'
+        })
+        expect(sender).toMatchObject({
+            "name": "Client",
+            "localName": "Client-123456",
+            "address": "localhost:4200",
+        })
     });
 });

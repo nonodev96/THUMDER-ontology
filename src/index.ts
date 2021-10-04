@@ -23,7 +23,7 @@ import { InteractionProtocol, Ontology } from "./_Core/Ontology";
 import { CFPSimulation } from "./AgentAction/CFPSimulation";
 import {
     FileManagerAction,
-    CreateFolder, CreateFile, ModifyFolder, ModifyFile, DeleteFolder, DeleteFile, ShowFolder, ShowFile
+    CreateFolder, CreateFile, ModifyFolder, ModifyFile, EditFile, DeleteFolder, DeleteFile, ShowFolder, ShowFile
 } from "./AgentAction/FileManagerAction";
 import { InformSimulation } from "./AgentAction/InformSimulation";
 import { RequestInstruction } from "./AgentAction/RequestInstruction";
@@ -85,7 +85,7 @@ export {
 
     // AgentAction
     FileManagerAction,
-    CreateFolder, CreateFile, ModifyFolder, ModifyFile, DeleteFolder, DeleteFile, ShowFolder, ShowFile,
+    CreateFolder, CreateFile, ModifyFolder, ModifyFile, EditFile, DeleteFolder, DeleteFile, ShowFolder, ShowFile,
     CFPSimulation,
     InformSimulation,
     RequestInstruction,

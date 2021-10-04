@@ -2,13 +2,12 @@ import { AgentAction } from "../_Core/content/AgentAction";
 import { Md5 } from "md5-typescript";
 
 export class FileManagerAction implements AgentAction {
-
     private path: string;
-    private folderName: string;
+    private md5?: string | null;
+    public key?: string | null;
 
-    constructor(path: string, folderName: string) {
+    constructor(path: string) {
         this.path = path;
-        this.folderName = folderName;
     }
 
     public getPath(): string {
@@ -19,20 +18,30 @@ export class FileManagerAction implements AgentAction {
         this.path = value;
     }
 
-    public getFolderName(): string {
-        return this.folderName;
+    // Uuid --> File and folder key
+    public setKey(value: string) {
+        this.key = value;
     }
 
-    public setFolderName(value: string) {
-        this.folderName = value;
+    public getKey(): string {
+        return <string>this.key;
+    }
+
+    // MD5 -> File content
+    public setMD5(value: string) {
+        this.md5 = value;
+    }
+
+    public getMD5(): string {
+        return <string>this.md5;
     }
 }
 
 export class CreateFolder extends FileManagerAction {
     private newFolder: string;
 
-    constructor(path: string, folderName: string, newFolder: string) {
-        super(path, folderName);
+    constructor(path: string, newFolder: string) {
+        super(path);
         this.newFolder = newFolder;
     }
 
@@ -48,8 +57,8 @@ export class CreateFolder extends FileManagerAction {
 export class CreateFile extends FileManagerAction {
     private newFile: string;
 
-    constructor(path: string, folderName: string, newFile: string) {
-        super(path, folderName);
+    constructor(path: string, newFile: string) {
+        super(path);
         this.newFile = newFile;
     }
 
@@ -65,8 +74,9 @@ export class CreateFile extends FileManagerAction {
 export class ModifyFolder extends FileManagerAction {
     private newFolderName: string;
 
-    constructor(path: string, folderName: string, newFolderName: string) {
-        super(path, folderName);
+    constructor(path: string, key: string, newFolderName: string) {
+        super(path);
+        this.key = key;
         this.newFolderName = newFolderName;
     }
 
@@ -80,53 +90,48 @@ export class ModifyFolder extends FileManagerAction {
 }
 
 export class ModifyFile extends FileManagerAction {
-    private oldFileName: string;
-    private newFileName?: string | null;
-    private content?: string | null;
-    private md5?: string | null;
+    private newFileName: string;
 
-    constructor(path: string, folderName: string, oldFileName: string) {
-        super(path, folderName);
-        this.oldFileName = oldFileName;
-        this.newFileName = null;
-        this.content = null;
-    }
-
-    public getOldFileName(): string {
-        return this.oldFileName;
-    }
-
-    public setOldFileName(value: string) {
-        this.oldFileName = value;
+    constructor(path: string, key: string, newFileName: string) {
+        super(path);
+        this.key = key;
+        this.newFileName = newFileName;
     }
 
     public getNewFileName(): string {
-        return <string>this.newFileName;
+        return this.newFileName;
     }
 
     public setNewFileName(value: string) {
         this.newFileName = value;
     }
+}
 
-    public getContent(): string {
-        return <string>this.content;
+export class EditFile extends FileManagerAction {
+    private content: string[];
+
+    constructor(path: string, key: string, content: string[]) {
+        super(path);
+        this.key = key;
+        this.content = content;
     }
 
-    public setContent(value: string) {
-        this.md5 = Md5.init(value);
+    public getContent(): string[] {
+        return this.content;
+    }
+
+    public setContent(value: string[]) {
+        this.setMD5(Md5.init(value.toString()));
         this.content = value;
-    }
-
-    public getMD5(): string {
-        return <string>this.md5;
     }
 }
 
 export class DeleteFolder extends FileManagerAction {
     private folderNameToDelete: string;
 
-    constructor(path: string, folderName: string, folderNameToDelete: string) {
-        super(path, folderName);
+    constructor(path: string, key: string, folderNameToDelete: string) {
+        super(path);
+        this.key = key;
         this.folderNameToDelete = folderNameToDelete;
     }
 
@@ -142,8 +147,9 @@ export class DeleteFolder extends FileManagerAction {
 export class DeleteFile extends FileManagerAction {
     private fileNameToDelete: string;
 
-    constructor(path: string, folderName: string, fileNameToDelete: string) {
-        super(path, folderName);
+    constructor(path: string, key: string, fileNameToDelete: string) {
+        super(path);
+        this.key = key;
         this.fileNameToDelete = fileNameToDelete;
     }
 
@@ -159,8 +165,9 @@ export class DeleteFile extends FileManagerAction {
 export class ShowFolder extends FileManagerAction {
     private folderNameToShow: string;
 
-    constructor(path: string, folderName: string, folderNameToShow: string) {
-        super(path, folderName);
+    constructor(path: string, key: string, folderNameToShow: string) {
+        super(path);
+        this.key = key;
         this.folderNameToShow = folderNameToShow;
     }
 
@@ -176,8 +183,9 @@ export class ShowFolder extends FileManagerAction {
 export class ShowFile extends FileManagerAction {
     private fileNameToShow: string;
 
-    constructor(path: string, folderName: string, fileNameToShow: string) {
-        super(path, folderName);
+    constructor(path: string, key: string, fileNameToShow: string) {
+        super(path);
+        this.key = key;
         this.fileNameToShow = fileNameToShow;
     }
 

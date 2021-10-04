@@ -28,14 +28,15 @@ describe("Check Tasks", () => {
             }
 
             handleRequest(request: ACLMessage): ACLMessage {
-                const createFile = plainToClass(CreateFile, <CreateFile>JSON.parse(request.getContent()))
+                const createFile = plainToClass(CreateFile, <CreateFile>JSON.parse(request.getContent()));
+                createFile.getNewFile();
                 const message_reply = request.createReply();
                 message_reply.setPerformative(Performative.AGREE);
                 return message_reply
             }
         }
 
-        const createFile = new CreateFile('path/to/folder', 'tests/', 'example_00.s')
+        const createFile = new CreateFile('path/to/folder', 'example_00.s')
         const createFile_string = JSON.stringify(createFile)
         const message = new ACLMessage()
         message.setSender(new AID({

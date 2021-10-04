@@ -22,6 +22,7 @@ describe("Check Core of Agents", () => {
             "receivers": [],
             "reply_to": [],
             "reply_with": "",
+            "action": "",
             "sender": {
                 "name": "",
                 "localName": "",
@@ -52,6 +53,7 @@ describe("Check Core of Agents", () => {
             }],
             "reply_to": [],
             "reply_with": "",
+            "action": "",
             "sender": {
                 "name": "Anders-Hejlsberg",
                 "localName": "192.168.1.144-Anders-Hejlsberg",
@@ -73,7 +75,7 @@ describe("Check Core of Agents", () => {
             name: "James-Gosling",
             localName: "192.168.1.144-James-Gosling",
             address: "192.168.1.144"
-        }))
+        }));
         expect(msg).toMatchObject({
             "content": "",
             "in_reply_to": "",
@@ -90,6 +92,7 @@ describe("Check Core of Agents", () => {
             }],
             "reply_to": [],
             "reply_with": "",
+            "action": "",
             "sender": {
                 "name": "Ada-Lovelace",
                 "localName": "192.168.1.144-Ada-Lovelace",

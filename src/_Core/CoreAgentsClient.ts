@@ -70,7 +70,6 @@ export class CoreAgentsClient {
     public sendToServer(msg: ACLMessage): Promise<TaskContainer> {
         return new Promise<TaskContainer>((resolve, reject) => {
             this.clientSocket.emit("messages", msg, async (response: TaskContainer) => {
-
                 const classHandler = this.tasksMap.get(response.taskName)
                 let taskResolve, taskResolveDeleted
                 if (classHandler !== undefined) {
@@ -79,7 +78,6 @@ export class CoreAgentsClient {
                 } else {
                     reject("classHandler undefined - Task no response")
                 }
-
                 // console.log('resolve', response, taskResolve, taskResolveDeleted)
                 resolve(response)
             })
@@ -93,23 +91,19 @@ export class CoreAgentsClient {
      * @private
      */
     private initEventListener() {
-
-        this.clientSocket.on("connect_error", (error) => {
+        this.clientSocket.on("connect_error", (error: any) => {
             console.log('error', error)
             this.clientSocket.disconnect()
         })
-
-        this.clientSocket.on("disconnect", (reason) => {
+        this.clientSocket.on("disconnect", (reason: any) => {
             console.log('disconnect', reason)
             this.clientSocket.disconnect()
         })
-
-        this.clientSocket.on("connect", (args) => {
+        this.clientSocket.on("connect", (_args: any) => {
             console.log('connect', this.clientSocket.id)
             this.clientID = this.clientSocket.id
         })
-
-        this.clientSocket.on("messages", async (args, callback) => {
+        this.clientSocket.on("messages", async (args: ACLMessage | ACLMessage[] | null, _callback: any) => {
             try {
                 const message = plainToClass(ACLMessage, <ACLMessage>args)
                 const ontology = plainToClass(Ontology, <Ontology>message.getOntology())
@@ -126,7 +120,6 @@ export class CoreAgentsClient {
             }
         })
     }
-
 
     public disconnect() {
         this.clientSocket.disconnect()

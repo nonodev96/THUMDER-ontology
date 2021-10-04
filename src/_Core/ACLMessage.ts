@@ -44,6 +44,7 @@ export class ACLMessage {
     private reply_with: string;
     private content: string;
     private performative: Performative;
+    private action: string;
 
     constructor(obj?: IConstructorACLMessage) {
         this.sender = new AID();
@@ -55,6 +56,7 @@ export class ACLMessage {
         this.in_reply_to = "";
         this.reply_with = "";
         this.content = "";
+        this.action = "";
 
         this.performative = obj && obj.performative || Performative.NONE;
     }
@@ -148,6 +150,14 @@ export class ACLMessage {
         this.content = value;
     }
 
+    public getAction(): string {
+        return this.action;
+    }
+
+    public setAction(value: string) {
+        this.action = value;
+    }
+
     public createReply(): ACLMessage {
         const m = new ACLMessage({
             performative: this.getPerformative()
@@ -160,9 +170,11 @@ export class ACLMessage {
             m.addReceiver(this.getSender());
         }
         m.setLanguage(this.getLanguage());
+        m.setLanguage(this.getLanguage());
         m.setOntology(this.getOntology());
         m.setProtocol(this.getProtocol());
         m.setInReplyTo(this.getReplyWith());
+        m.setAction(this.getAction());
         if (this.sender !== undefined) {
             m.setReplyWith(this.sender.name + new Date().toISOString());
         } else {
@@ -229,6 +241,7 @@ export class ACLMessage {
             reply_to: this.reply_to,
             reply_with: this.reply_with,
             content: this.content,
+            action: this.action,
         }.toString();
     }
 
