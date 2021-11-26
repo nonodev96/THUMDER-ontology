@@ -1,9 +1,5 @@
-import { Concept } from "../_Core/content/Concept";
+import Concept from "../_Core/content/Concept";
 
-export abstract class Authentication implements Concept {
+export default abstract class Authentication implements Concept {}
 
-}
-
-export class AuthenticationToken extends Authentication {
-
-}
+export class AuthenticationToken extends Authentication {}

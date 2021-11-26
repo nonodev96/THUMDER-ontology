@@ -1,36 +1,36 @@
-import { Concept } from "../_Core/content/Concept";
+import Concept from "../_Core/content/Concept";
 
-export class Instruction extends Concept {
-    private _line: number;
-    private _content: string
+export default class Instruction extends Concept {
+  private _line: number;
 
-    constructor(line: number, content: string) {
-        super();
-        this._line = line;
-        this._content = content;
-    }
+  private _content: string;
 
-    get line(): number {
-        return this._line;
-    }
+  constructor(line: number, content: string) {
+    super();
+    this._line = line;
+    this._content = content;
+  }
 
-    set line(value: number) {
-        this._line = value;
-    }
+  public getLine(): number {
+    return this._line;
+  }
 
-    get content(): string {
-        return this._content;
-    }
+  public setLine(value: number) {
+    this._line = value;
+  }
 
-    set content(value: string) {
-        this._content = value;
-    }
+  public getContent(): string {
+    return this._content;
+  }
 
+  public setContent(value: string) {
+    this._content = value;
+  }
 
-    toString(): string {
-        return {
-            line: this._line,
-            content: this._content,
-        }.toString();
-    }
+  public toString(): string {
+    return {
+      line: this._line,
+      content: this._content,
+    }.toString();
+  }
 }

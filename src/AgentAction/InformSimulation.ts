@@ -1,5 +1,3 @@
-import { AgentAction } from "../_Core/content/AgentAction";
+import AgentAction from "../_Core/content/AgentAction";
 
-export class InformSimulation implements AgentAction {
-
-}
+export default class InformSimulation implements AgentAction {}

@@ -1,42 +1,43 @@
 interface AID_Constructor {
-    name: string,
-    localName?: string,
-    address?: string
+  name: string;
+  localName?: string;
+  address?: string;
 }
 
-export class AID {
-    public name: string
-    public localName: string
-    public address: string
+export default class AID {
+  public name: string;
 
-    constructor(obj?: AID_Constructor) {
-        this.name = obj && obj.name || "";
-        this.localName = obj && obj.localName || "";
-        this.address = obj && obj.address || "";
-    }
+  public localName: string;
 
-    public setName(value: string) {
-        this.name = value;
-    }
+  public address: string;
 
-    public getName(): string {
-        return this.name;
-    }
+  constructor(obj?: AID_Constructor) {
+    this.name = (obj && obj.name) || "";
+    this.localName = (obj && obj.localName) || "";
+    this.address = (obj && obj.address) || "";
+  }
 
-    public getLocalName(value: string) {
-        this.localName = value;
-    }
+  public setName(value: string) {
+    this.name = value;
+  }
 
-    public setLocalName(): string {
-        return this.localName;
-    }
+  public getName(): string {
+    return this.name;
+  }
 
-    public setAddress(value: string) {
-        this.address = value;
-    }
+  public getLocalName(value: string) {
+    this.localName = value;
+  }
 
-    public getAddress(): string {
-        return this.address;
-    }
+  public setLocalName(): string {
+    return this.localName;
+  }
 
+  public setAddress(value: string) {
+    this.address = value;
+  }
+
+  public getAddress(): string {
+    return this.address;
+  }
 }

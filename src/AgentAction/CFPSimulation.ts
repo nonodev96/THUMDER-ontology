@@ -1,5 +1,3 @@
-import { AgentAction } from "../_Core/content/AgentAction";
+import AgentAction from "../_Core/content/AgentAction";
 
-export class CFPSimulation implements AgentAction {
-
-}
+export default class CFPSimulation implements AgentAction {}

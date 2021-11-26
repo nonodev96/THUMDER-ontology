@@ -1,26 +1,21 @@
-import { Concept } from "../_Core/content/Concept";
+import Concept from "../_Core/content/Concept";
 
 export class AgentCommunication implements Concept {
+  private _name: string;
 
-    private _name: string;
+  constructor(name: string) {
+    this._name = name;
+  }
 
-    constructor(name: string) {
-        this._name = name;
-    }
+  public getName(): string {
+    return this._name;
+  }
 
-    public getName(): string {
-        return this._name
-    }
-
-    public setName(value: string){
-        this._name = value
-    }
+  public setName(value: string) {
+    this._name = value;
+  }
 }
 
-export class Client extends AgentCommunication {
+export class Client extends AgentCommunication {}
 
-}
-
-export class Server extends AgentCommunication {
-
-}
+export class Server extends AgentCommunication {}

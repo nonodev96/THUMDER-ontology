@@ -1,15 +1,15 @@
-import { Concept } from "../_Core/content/Concept";
+import Concept from "../_Core/content/Concept";
 
-export class FileManager implements Concept {
+export default class FileManager implements Concept {
+  public path: string;
 
-    path: string;
-    filename: string;
-    files: File[]
+  public filename: string;
 
-    constructor() {
-        this.path = "";
-        this.filename = "";
-        this.files = [];
-    }
+  public files: File[];
 
+  constructor() {
+    this.path = "";
+    this.filename = "";
+    this.files = [];
+  }
 }

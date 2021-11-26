@@ -1,41 +1,42 @@
-import { Predicate } from "../_Core/content/Predicate";
 import { Md5 } from "md5-typescript";
+import Predicate from "../_Core/content/Predicate";
 
-export class AcceptSimulation implements Predicate {
+export default class AcceptSimulation implements Predicate {
+  private _md5: string;
 
-    private _md5: string;
-    private _filename: string;
-    private _content: string;
+  private _filename: string;
 
-    constructor(filename: string, content: string) {
-        this._filename = filename;
-        this._content = content;
-        this._md5 = Md5.init(content);
-    }
+  private _content: string;
 
-    get filename(): string {
-        return this._filename;
-    }
+  constructor(filename: string, content: string) {
+    this._filename = filename;
+    this._content = content;
+    this._md5 = Md5.init(content);
+  }
 
-    set filename(value: string) {
-        this._filename = value;
-    }
+  get filename(): string {
+    return this._filename;
+  }
 
-    get content(): string {
-        return this._content;
-    }
+  set filename(value: string) {
+    this._filename = value;
+  }
 
-    // When you change de content of file the hash change
-    set content(value: string) {
-        this._md5 = Md5.init(value);
-        this._content = value;
-    }
+  get content(): string {
+    return this._content;
+  }
 
-    toString(): string {
-        return {
-            md5: this._md5,
-            filename: this._filename,
-            content: this._content,
-        }.toString();
-    }
+  // When you change de content of file the hash change
+  set content(value: string) {
+    this._md5 = Md5.init(value);
+    this._content = value;
+  }
+
+  toString(): string {
+    return {
+      md5: this._md5,
+      filename: this._filename,
+      content: this._content,
+    }.toString();
+  }
 }

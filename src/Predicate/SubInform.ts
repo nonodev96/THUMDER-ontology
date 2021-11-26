@@ -1,52 +1,50 @@
-import { Predicate } from "../_Core/content/Predicate";
-import { Instruction } from "../Concept/Instruction";
-import { StatusMachine } from "../Concept/StatusMachine";
+import Predicate from "../_Core/content/Predicate";
+import Instruction from "../Concept/Instruction";
+import StatusMachine from "../Concept/StatusMachine";
 import { Incidence } from "../Utils/Vocabulary";
 
-export abstract class SubInform implements Predicate {
-}
+export abstract class SubInform implements Predicate {}
 
 export class IncidenceCommunication extends SubInform {
-    private detail: Incidence;
+  private detail: Incidence;
 
-    constructor(detail: Incidence) {
-        super();
-        this.detail = detail;
-    }
+  constructor(detail: Incidence) {
+    super();
+    this.detail = detail;
+  }
 }
 
 export class ResultInstruction extends SubInform {
-    private _instruction: Instruction;
-    private _statusMachine: StatusMachine;
+  private _instruction: Instruction;
 
-    constructor(instruction: Instruction, statusMachine: StatusMachine) {
-        super();
-        this._instruction = instruction;
-        this._statusMachine = statusMachine;
-    }
+  private _statusMachine: StatusMachine;
 
-    get instruction(): Instruction {
-        return this._instruction;
-    }
+  constructor(instruction: Instruction, statusMachine: StatusMachine) {
+    super();
+    this._instruction = instruction;
+    this._statusMachine = statusMachine;
+  }
 
-    set instruction(value: Instruction) {
-        this._instruction = value;
-    }
+  public getInstruction(): Instruction {
+    return this._instruction;
+  }
 
-    get statusMachine(): StatusMachine {
-        return this._statusMachine;
-    }
+  public setInstruction(value: Instruction) {
+    this._instruction = value;
+  }
 
-    set statusMachine(value: StatusMachine) {
-        this._statusMachine = value;
-    }
+  public getStatusMachine(): StatusMachine {
+    return this._statusMachine;
+  }
 
-    toString(): string {
-        return {
-            instruction: this.instruction,
-            status_machine: this.statusMachine,
-        }.toString();
-    }
+  public setStatusMachine(value: StatusMachine) {
+    this._statusMachine = value;
+  }
 
-
+  public toString(): string {
+    return {
+      instruction: this._instruction,
+      status_machine: this._statusMachine,
+    }.toString();
+  }
 }

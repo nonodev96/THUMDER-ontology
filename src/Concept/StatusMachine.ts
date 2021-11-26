@@ -1,9 +1,5 @@
-import { Concept } from "../_Core/content/Concept";
+import Concept from "../_Core/content/Concept";
 
-class Machine {
+class Machine {}
 
-}
-
-export class StatusMachine extends Machine implements Concept {
-
-}
+export default class StatusMachine extends Machine implements Concept {}

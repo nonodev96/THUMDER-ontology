@@ -1,16 +1,16 @@
-import { Predicate } from "../_Core/content/Predicate";
+import Predicate from "../_Core/content/Predicate";
 
-export class FileManagerStatus extends Predicate {
-    public status: string
+export default class FileManagerStatus extends Predicate {
+  public status: string;
 
-    constructor(status: string) {
-        super();
-        this.status = status;
-    }
+  constructor(status: string) {
+    super();
+    this.status = status;
+  }
 
-    public toString(): string {
-        return {
-            status: this.status
-        }.toString();
-    }
+  public toString(): string {
+    return {
+      status: this.status,
+    }.toString();
+  }
 }

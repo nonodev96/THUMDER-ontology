@@ -1,7 +1,5 @@
-import { Ontology } from "./_Core/Ontology";
+import Ontology from "./_Core/Ontology";
 
-export class OntoTHUMDER {
-    public static ontology: Ontology = new Ontology("OntologyTHUMDER");
-
-
+export default class OntoTHUMDER {
+  public static ontology: Ontology = new Ontology("OntologyTHUMDER");
 }

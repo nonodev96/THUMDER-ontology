@@ -1,3 +1,3 @@
-export abstract class Concept {
-    abstract toString(): string;
+export default abstract class Concept {
+  abstract toString(): string;
 }

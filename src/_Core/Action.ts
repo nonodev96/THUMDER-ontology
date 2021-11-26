@@ -1,33 +1,33 @@
-export class Action {
+export default class Action {
+  private _actionName?: string;
 
-    private _actionName?: string;
-    private _actionContent?: string;
-    private _actionObject?: Object;
+  private _actionContent?: string;
 
-    constructor() {
-    }
+  private _actionObject?: Object;
 
-    public getActionName(): string {
-        return <string>this._actionName;
-    }
+  constructor() {}
 
-    public setActionName(value: string) {
-        this._actionName = value;
-    }
+  public getActionName(): string {
+    return <string>this._actionName;
+  }
 
-    public getActionContent(): string {
-        return <string>this._actionContent;
-    }
+  public setActionName(value: string) {
+    this._actionName = value;
+  }
 
-    public setActionContent(value: string) {
-        this._actionContent = value;
-    }
+  public getActionContent(): string {
+    return <string>this._actionContent;
+  }
 
-    public getActionObject(): any {
-        return this._actionObject;
-    }
+  public setActionContent(value: string) {
+    this._actionContent = value;
+  }
 
-    public setActionObject(value: any) {
-        this._actionObject = value;
-    }
+  public getActionObject(): any {
+    return this._actionObject;
+  }
+
+  public setActionObject(value: any) {
+    this._actionObject = value;
+  }
 }

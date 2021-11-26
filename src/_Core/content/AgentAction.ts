@@ -1,3 +1,1 @@
-export abstract class AgentAction {
-
-}
+export default abstract class AgentAction {}

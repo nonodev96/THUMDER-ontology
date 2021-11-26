@@ -1,5 +1,3 @@
-export abstract class Predicate {
-
-    public abstract toString?(): string;
-
+export default abstract class Predicate {
+  public abstract toString?(): string;
 }

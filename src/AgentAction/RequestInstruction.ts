@@ -1,5 +1,3 @@
-import { AgentAction } from "../_Core/content/AgentAction";
+import AgentAction from "../_Core/content/AgentAction";
 
-export class RequestInstruction implements AgentAction {
-
-}
+export default class RequestInstruction implements AgentAction {}
